@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "Prime Forge Copilot – strategic and operational AI core with autonomy modes, memory, and Elaira interface.",
   "main": "dist/index.js",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "ts-node-dev --respawn src/index.ts",
     "build": "tsc",
