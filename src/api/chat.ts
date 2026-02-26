@@ -1,4 +1,3 @@
-// src/api/chat.ts
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 // Existing engine (kept for compatibility)
