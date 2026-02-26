@@ -42,7 +42,7 @@ export function route(req: RouteRequest): RouteResponse {
 
   const constrained = applyModeConstraints(context);
 
-  const policyCheck = Policy.evaluate(constrained, req);
+  const policyCheck = Policy.evaluateAction(req.action);
   if (!policyCheck.ok) {
     return { ok: false, message: policyCheck.message };
   }
