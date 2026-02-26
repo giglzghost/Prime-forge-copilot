@@ -1,2 +1,6 @@
 def handler(request):
-    return "Python serverless OK"
+    return {
+        "language": "Python",
+        "message": "Python serverless function OK",
+        "time": __import__("datetime").datetime.utcnow().isoformat()
+    }
