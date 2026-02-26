@@ -2,17 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/api/*.js",
+      "src": "dist/api/**/*.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
-    { "src": "/api/status", "dest": "/dist/api/status.js" },
-    { "src": "/api/plan", "dest": "/dist/api/plan.js" },
-    { "src": "/api/run-task", "dest": "/dist/api/run-task.js" },
-    { "src": "/api/memory", "dest": "/dist/api/memory.js" },
-    { "src": "/api/modes", "dest": "/dist/api/modes.js" },
-    { "src": "/api/chat", "dest": "/dist/api/chat.js" },
-    { "src": "/api", "dest": "/dist/api/index.js" }
+    {
+      "src": "/api/(.*)",
+      "dest": "/dist/api/$1.js"
+    }
   ]
 }
