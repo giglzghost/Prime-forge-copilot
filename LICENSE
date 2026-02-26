@@ -1,0 +1,51 @@
+Prime‑Forge‑Copilot License (PF‑MIT Hybrid)
+Version 1.0
+
+Copyright (c) 2026 David Berry
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the “Software”), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, subject to the following conditions:
+
+1. Attribution
+   The above copyright notice and this permission notice shall be included
+   in all copies or substantial portions of the Software.
+
+2. Safety and Autonomy Restrictions
+   The Software includes components related to autonomy modes (A, B, C, D),
+   memory systems, and self‑modification guards. Any use of these components
+   must:
+   - Require explicit human authorization for mode escalation.
+   - Prohibit silent or automatic self‑replication.
+   - Prohibit bypassing or disabling safety, policy, or edit‑guard systems.
+   - Maintain transparent logs of autonomous actions where applicable.
+
+3. Memory and Data Integrity
+   Long‑term memory files (including JSONL logs) must not be altered,
+   deleted, or rewritten except by explicit user instruction. Any system
+   built on top of this Software must preserve append‑only memory semantics.
+
+4. Prohibited Uses
+   The Software may not be used to:
+   - Exfiltrate secrets or credentials.
+   - Perform destructive infrastructure actions without explicit human
+     confirmation.
+   - Create or manage financial transactions without explicit human
+     confirmation.
+   - Deploy autonomous agents that operate outside the constraints defined
+     in the Prime‑Forge core configuration.
+
+5. No Warranty
+   THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS
+   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+   CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+This license is compatible with the MIT License and may be treated as MIT
+for the purposes of open‑source distribution, provided the additional
+Prime‑Forge safety clauses remain intact.
