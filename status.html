@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Prime Forge Deployment Status</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { background:#000; color:#eee; font-family:Segoe UI; padding:40px; }
+h1 { color:#00ccff; }
+pre { background:#111; padding:20px; border-radius:10px; }
+button { padding:10px 20px; background:#00ccff; border:none; border-radius:6px; cursor:pointer; }
+button:hover { background:#0099cc; }
+</style>
+</head>
+<body>
+
+<h1>Deployment Status</h1>
+<p>This page checks whether your API routes are alive.</p>
+
+<button onclick="check()">Run Status Check</button>
+
+<pre id="out">Waiting...</pre>
+
+<script>
+async function check() {
+  const out = document.getElementById("out");
+  out.textContent = "Checking...";
+
+  const endpoints = [
+    "/api/chat",
+    "/api/auth",
+    "/api/avatar"
+  ];
+
+  let results = "";
+
+  for (const ep of endpoints) {
+    try {
+      const res = await fetch(ep);
+      results += ep + " → " + res.status + " " + res.statusText + "\n";
+    } catch (e) {
+      results += ep + " → ERROR\n";
+    }
+  }
+
+  out.textContent = results;
+}
+</script>
+
+</body>
+</html>
