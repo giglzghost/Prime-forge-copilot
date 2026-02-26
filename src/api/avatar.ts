@@ -1,4 +1,3 @@
-// src/api/avatar.ts
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { generateImage } from "../ai/provider";
 import elairaIdentity from "../elaira/elaira-identity.json";
@@ -72,20 +71,8 @@ ${styleContext}
 Output: centered portrait, clean background, high clarity.
     `;
 
-    // Multi‑provider fallback chain
-    let imageResult;
-
-    try {
-      imageResult = await generateImage({ prompt: finalPrompt, size });
-    } catch (err1) {
-      try {
-        imageResult = await generateImage({ prompt: finalPrompt, size });
-      } catch (err2) {
-        imageResult = {
-          url: `https://placehold.co/600x400?text=Avatar+Unavailable`,
-        };
-      }
-    }
+    // Multi‑provider fallback chain (handled inside generateImage)
+    const imageResult = await generateImage({ prompt: finalPrompt, size });
 
     return res.status(200).json({
       ok: true,
