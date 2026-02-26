@@ -1,51 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Prime Forge Deployment Status</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body { background:#000; color:#eee; font-family:Segoe UI; padding:40px; }
-h1 { color:#00ccff; }
-pre { background:#111; padding:20px; border-radius:10px; }
-button { padding:10px 20px; background:#00ccff; border:none; border-radius:6px; cursor:pointer; }
-button:hover { background:#0099cc; }
-</style>
+  <meta charset="UTF-8" />
+  <title>Prime Forge · System Status</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: #020617;
+      color: #e5e7eb;
+      margin: 0;
+      padding: 0;
+    }
+    .wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+    h2 {
+      font-size: 1rem;
+      margin-top: 22px;
+      margin-bottom: 6px;
+    }
+    p {
+      font-size: 0.9rem;
+      color: #9ca3af;
+      margin: 4px 0 10px;
+    }
+    code {
+      background: #020617;
+      border-radius: 4px;
+      padding: 2px 4px;
+      font-size: 0.8rem;
+    }
+    .card {
+      border-radius: 12px;
+      border: 1px solid #1f2937;
+      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 60%),
+                  #020617;
+      padding: 14px 14px 12px;
+      margin-top: 10px;
+    }
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .badge {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      color: #9ca3af;
+    }
+    .badge.ok {
+      border-color: #22c55e;
+      color: #bbf7d0;
+    }
+    .badge.warn {
+      border-color: #f97316;
+      color: #fed7aa;
+    }
+    a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .list {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+    .list li {
+      margin: 2px 0;
+    }
+    .footer {
+      margin-top: 26px;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <h1>Prime Forge · System Status</h1>
+    <p>
+      This page is static. If you can see this, the deployment is alive. Use the checks below to see whether the
+      <strong>AI core</strong> and <strong>API routes</strong> are behaving.
+    </p>
 
-<h1>Deployment Status</h1>
-<p>This page checks whether your API routes are alive.</p>
+    <div class="card">
+      <h2>Surface · Static Frontend</h2>
+      <p>
+        <strong>Expected:</strong> This page and <a href="/">the main landing page</a> should always load, even if the
+        AI is offline.
+      </p>
+      <div class="badge-row">
+        <span class="badge ok">Static HTML: Online</span>
+        <span class="badge">Framework: None (pure HTML)</span>
+      </div>
+    </div>
 
-<button onclick="check()">Run Status Check</button>
+    <div class="card">
+      <h2>Core · API Endpoints</h2>
+      <p>
+        These routes are implemented as serverless functions. If they return <code>Use POST.</code> or a JSON error,
+        the deployment is wired correctly.
+      </p>
+      <ul class="list">
+        <li>
+          <a href="/api/chat" target="_blank">/api/chat</a> – should respond with
+          <code>{"ok":false,"message":"Use POST."}</code> on GET.
+        </li>
+        <li>
+          <a href="/api/auth" target="_blank">/api/auth</a> – should respond with
+          <code>{"ok":false,"message":"Use POST."}</code> on GET.
+        </li>
+        <li>
+          <a href="/api/avatar" target="_blank">/api/avatar</a> – should respond with
+          <code>{"ok":false,"message":"Use POST."}</code> on GET.
+        </li>
+      </ul>
+      <div class="badge-row">
+        <span class="badge warn">If 404: build / routing misconfigured</span>
+        <span class="badge">If 500: function exists but crashed</span>
+      </div>
+    </div>
 
-<pre id="out">Waiting...</pre>
+    <div class="card">
+      <h2>Identity · Authorization Flow</h2>
+      <p>
+        Once SMTP and environment variables are configured, you can test the challenge‑response system by sending a
+        <code>POST</code> request to <code>/api/auth</code> with <code>{"action":"request"}</code>.
+      </p>
+      <ul class="list">
+        <li>On success, an email is sent to the founder’s addresses with a challenge token.</li>
+        <li>Confirm with <code>{"action":"confirm","token":"...","rootPhrase":"..."}</code> to bind the system.</li>
+      </ul>
+      <div class="badge-row">
+        <span class="badge">Guard: Challenge‑Response</span>
+        <span class="badge">Autonomy: Modes A–D</span>
+      </div>
+    </div>
 
-<script>
-async function check() {
-  const out = document.getElementById("out");
-  out.textContent = "Checking...";
-
-  const endpoints = [
-    "/api/chat",
-    "/api/auth",
-    "/api/avatar"
-  ];
-
-  let results = "";
-
-  for (const ep of endpoints) {
-    try {
-      const res = await fetch(ep);
-      results += ep + " → " + res.status + " " + res.statusText + "\n";
-    } catch (e) {
-      results += ep + " → ERROR\n";
-    }
-  }
-
-  out.textContent = results;
-}
-</script>
-
+    <div class="footer">
+      If this page loads on Vercel but not on Azure (or vice versa), the problem is deployment configuration—not the
+      code. If <code>/api/*</code> returns 404, the problem is build output or routing.
+    </div>
+  </div>
 </body>
 </html>
