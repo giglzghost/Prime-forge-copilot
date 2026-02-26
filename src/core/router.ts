@@ -42,9 +42,11 @@ export function route(req: RouteRequest): RouteResponse {
 
   const constrained = applyModeConstraints(context);
 
+  // FIXED: use evaluateAction() and correct fields
   const policyCheck = Policy.evaluateAction(req.action);
-  if (!policyCheck.ok) {
-    return { ok: false, message: policyCheck.message };
+
+  if (!policyCheck.allowed) {
+    return { ok: false, message: policyCheck.reason };
   }
 
   switch (req.type) {
