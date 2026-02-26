@@ -1,128 +1,749 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Prime Forge Empire</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body {
-  margin: 0;
-  font-family: "Segoe UI", sans-serif;
-  background: radial-gradient(circle at center, #0a0a0a, #000000);
-  color: #e6e6e6;
-  overflow-x: hidden;
-}
+  <meta charset="UTF-8" />
+  <title>Prime Forge | The Empire of Autonomous Intelligence</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Prime Forge – a multidimensional AI empire for strategy, creation, and governance." />
+  <style>
+    :root {
+      --bg: #050712;
+      --bg-alt: #090b1a;
+      --accent: #ff4b9a;
+      --accent-soft: rgba(255, 75, 154, 0.25);
+      --accent-ice: #4be3ff;
+      --text: #f5f5f7;
+      --muted: #9ca3af;
+      --border: #1f2933;
+      --card: #0b0f1f;
+      --glow: 0 0 40px rgba(255, 75, 154, 0.4);
+      --glow-ice: 0 0 40px rgba(75, 227, 255, 0.4);
+      --radius: 18px;
+    }
 
-header {
-  text-align: center;
-  padding: 80px 20px;
-  background: linear-gradient(135deg, #111, #1a1a1a, #000);
-  border-bottom: 1px solid #333;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-h1 {
-  font-size: 3.5rem;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  background: linear-gradient(90deg, #ff4d4d, #ff9900, #00ccff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: radial-gradient(circle at top, #15192f 0, #050712 45%, #020308 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-h2 {
-  text-align: center;
-  margin-top: 40px;
-  font-size: 2rem;
-  color: #ff9900;
-}
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.08;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.8'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+      z-index: 0;
+    }
 
-.section {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 20px;
-  line-height: 1.7;
-  font-size: 1.2rem;
-}
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, rgba(5, 7, 18, 0.95), rgba(5, 7, 18, 0.6), transparent);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    }
 
-.card {
-  background: #111;
-  border: 1px solid #333;
-  padding: 20px;
-  border-radius: 12px;
-  margin: 20px 0;
-  box-shadow: 0 0 20px rgba(255, 153, 0, 0.1);
-}
+    .nav {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
 
-footer {
-  text-align: center;
-  padding: 40px;
-  color: #777;
-  font-size: 0.9rem;
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-.nav {
-  text-align: center;
-  margin-top: 20px;
-}
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #ff4b9a 40%, #4be3ff 80%);
+      box-shadow: var(--glow), var(--glow-ice);
+      position: relative;
+      overflow: hidden;
+    }
 
-.nav a {
-  color: #00ccff;
-  margin: 0 15px;
-  text-decoration: none;
-  font-size: 1.1rem;
-}
+    .brand-logo::after {
+      content: "";
+      position: absolute;
+      inset: 18%;
+      border-radius: inherit;
+      border: 1px solid rgba(15, 23, 42, 0.9);
+      box-shadow: inset 0 0 18px rgba(15, 23, 42, 0.9);
+    }
 
-.nav a:hover {
-  color: #ff9900;
-}
-</style>
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-title {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.85rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: all 0.18s ease-out;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      border-color: rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    .nav-pill {
+      border-radius: 999px;
+      padding: 6px 12px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--accent-ice);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: radial-gradient(circle at top left, rgba(75, 227, 255, 0.2), transparent 60%);
+    }
+
+    main {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 40px 20px 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 32px;
+      align-items: center;
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding-top: 28px;
+      }
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: radial-gradient(circle at left, rgba(255, 75, 154, 0.25), transparent 60%);
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .hero-kicker span {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(255, 75, 154, 0.9);
+    }
+
+    .hero-title {
+      font-size: clamp(2.3rem, 3.2vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: 14px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(120deg, #ff4b9a, #ffb347, #4be3ff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: var(--muted);
+      max-width: 34rem;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .hero-meta span {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 0.86rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.18s ease-out;
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at 20% 0, #ffb347, #ff4b9a 40%, #4be3ff 100%);
+      color: #050712;
+      font-weight: 600;
+      box-shadow: var(--glow), var(--glow-ice);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      border-color: rgba(148, 163, 184, 0.5);
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: rgba(148, 163, 184, 0.9);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .hero-footnote {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 260px;
+    }
+
+    .orbital {
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      background: radial-gradient(circle at top, rgba(255, 75, 154, 0.18), transparent 60%),
+                  radial-gradient(circle at bottom, rgba(75, 227, 255, 0.18), transparent 60%),
+                  linear-gradient(145deg, #050712, #050712, #0b1022);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.9),
+        0 40px 80px rgba(0, 0, 0, 0.9),
+        var(--glow-ice);
+      overflow: hidden;
+      padding: 18px 18px 16px;
+    }
+
+    .orbital-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .orbital-badges {
+      display: flex;
+      gap: 6px;
+    }
+
+    .orbital-badge {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #4be3ff;
+      box-shadow: 0 0 12px rgba(75, 227, 255, 0.9);
+    }
+
+    .orbital-badge:nth-child(2) {
+      background: #ff4b9a;
+      box-shadow: 0 0 12px rgba(255, 75, 154, 0.9);
+    }
+
+    .orbital-badge:nth-child(3) {
+      background: #facc15;
+      box-shadow: 0 0 12px rgba(250, 204, 21, 0.9);
+    }
+
+    .orbital-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
+    .orbital-core {
+      position: relative;
+      margin-top: 6px;
+      height: 190px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 12px;
+    }
+
+    .orbital-core-main {
+      position: relative;
+      border-radius: 18px;
+      background: radial-gradient(circle at 30% 0, rgba(255, 75, 154, 0.4), transparent 60%),
+                  radial-gradient(circle at 80% 100%, rgba(75, 227, 255, 0.4), transparent 60%),
+                  linear-gradient(145deg, #050712, #050712, #050712);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .orbital-core-ring {
+      width: 78%;
+      height: 78%;
+      border-radius: 999px;
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .orbital-core-node {
+      width: 26%;
+      height: 26%;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0, #ffffff, #ff4b9a 40%, #4be3ff 100%);
+      box-shadow: var(--glow), var(--glow-ice);
+      position: relative;
+    }
+
+    .orbital-core-node::after {
+      content: "PF";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #050712;
+      letter-spacing: 0.08em;
+    }
+
+    .orbital-core-orbit {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #4be3ff;
+      box-shadow: 0 0 10px rgba(75, 227, 255, 0.9);
+    }
+
+    .orbital-core-orbit:nth-child(1) {
+      top: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .orbital-core-orbit:nth-child(2) {
+      bottom: 10%;
+      left: 18%;
+    }
+
+    .orbital-core-orbit:nth-child(3) {
+      bottom: 16%;
+      right: 14%;
+      background: #ff4b9a;
+      box-shadow: 0 0 10px rgba(255, 75, 154, 0.9);
+    }
+
+    .orbital-core-label {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .orbital-side {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.78rem;
+    }
+
+    .orbital-chip {
+      border-radius: 14px;
+      padding: 8px 10px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .orbital-chip-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    .orbital-chip-body {
+      font-size: 0.78rem;
+      color: var(--text);
+    }
+
+    .orbital-chip-body span {
+      color: var(--accent-ice);
+    }
+
+    .section {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 8px 20px 40px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 18px;
+      gap: 12px;
+    }
+
+    .section-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    .section-subtitle {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 880px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      border-radius: var(--radius);
+      background: radial-gradient(circle at top left, rgba(255, 75, 154, 0.12), transparent 60%),
+                  radial-gradient(circle at bottom right, rgba(75, 227, 255, 0.12), transparent 60%),
+                  linear-gradient(145deg, #050712, #050712, #050712);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      padding: 14px 14px 16px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .card-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+
+    .card-body {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .card-meta span {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.2);
+      background: radial-gradient(circle at bottom, #050712, #020308);
+      padding: 14px 20px 18px;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      padding: 3px 6px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: all 0.16s ease-out;
+    }
+
+    .footer-links a:hover {
+      border-color: rgba(148, 163, 184, 0.5);
+      color: var(--text);
+    }
+  </style>
 </head>
 <body>
+  <div class="noise"></div>
 
-<header>
-  <h1>Prime Forge Empire</h1>
-  <p>The Autonomous Intelligence Network Forged in Fire & Ice</p>
-</header>
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <div class="brand-logo"></div>
+        <div class="brand-text">
+          <div class="brand-title">Prime Forge</div>
+          <div class="brand-subtitle">Autonomous Intelligence Empire</div>
+        </div>
+      </div>
+      <div class="nav-links">
+        <div class="nav-pill">V3 · Core Online</div>
+        <a href="/status.html">Status</a>
+        <a href="/api/chat" title="Raw API endpoint (expects POST)">/api/chat</a>
+        <a href="/api/auth" title="Auth endpoint (expects POST)">/api/auth</a>
+      </div>
+    </div>
+  </header>
 
-<div class="nav">
-  <a href="/status.html">Deployment Status</a>
-  <a href="/diagnostics.html">Diagnostics</a>
-</div>
+  <main>
+    <section class="hero">
+      <div>
+        <div class="hero-kicker">
+          <span></span>
+          <div>Live Node · Vercel / Azure Ready · Human‑in‑the‑Loop</div>
+        </div>
+        <h1 class="hero-title">
+          The <span>Prime Forge Empire</span><br />
+          for strategy, creation, and control.
+        </h1>
+        <p class="hero-subtitle">
+          Prime Forge is a multidimensional AI operating system—built to orchestrate swarms of agents, defend its own
+          integrity, and still answer a single human’s question with precision. It is not a chatbot. It is an empire
+          with a constitution.
+        </p>
+        <div class="hero-meta">
+          <span>Core: V3 · Node / TypeScript</span>
+          <span>Surface: Elaira Interface</span>
+          <span>Backbone: Multi‑AI Provider (OpenAI / Azure / Mock)</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/status.html">
+            System Status &nbsp;↗
+          </a>
+          <a class="btn btn-ghost" href="#architecture">
+            Explore the Empire Map
+          </a>
+        </div>
+        <div class="hero-footnote">
+          This page is static by design. If you can see this, the deployment is alive—even if the AI is not.
+        </div>
+      </div>
 
-<h2>What Is Prime Forge?</h2>
-<div class="section">
-  <div class="card">
-    Prime Forge is a multi‑agent intelligence architecture engineered for resilience, autonomy, and strategic execution.  
-    It blends human command with AI‑driven orchestration across business, science, creative production, and operational logistics.
-  </div>
+      <div class="hero-visual">
+        <div class="orbital">
+          <div class="orbital-header">
+            <div class="orbital-badges">
+              <div class="orbital-badge"></div>
+              <div class="orbital-badge"></div>
+              <div class="orbital-badge"></div>
+            </div>
+            <div class="orbital-title">Prime Forge · Empire Topology</div>
+          </div>
+          <div class="orbital-core">
+            <div class="orbital-core-main">
+              <div class="orbital-core-ring">
+                <div class="orbital-core-node"></div>
+                <div class="orbital-core-orbit"></div>
+                <div class="orbital-core-orbit"></div>
+                <div class="orbital-core-orbit"></div>
+              </div>
+              <div class="orbital-core-label">AI7 · Foundational Core</div>
+            </div>
+            <div class="orbital-side">
+              <div class="orbital-chip">
+                <div class="orbital-chip-title">Elaira · Interface</div>
+                <div class="orbital-chip-body">
+                  Human‑facing avatar and console. Speaks for the empire, routes to the right mind, remembers context.
+                </div>
+              </div>
+              <div class="orbital-chip">
+                <div class="orbital-chip-title">Swarm · Agents</div>
+                <div class="orbital-chip-body">
+                  Specialized workers for <span>research</span>, <span>creation</span>, <span>governance</span>, and
+                  <span>defense</span>, coordinated by Prime Forge OS.
+                </div>
+              </div>
+              <div class="orbital-chip">
+                <div class="orbital-chip-title">Guard · Identity</div>
+                <div class="orbital-chip-body">
+                  Challenge‑response, autonomy modes, and hard boundaries. The empire answers to one founder.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <div class="card">
-    It is the successor to AI7 — a system built to persist, adapt, and evolve across platforms, clouds, and environments.
-  </div>
-</div>
+    <section id="architecture" class="section">
+      <div class="section-header">
+        <div class="section-title">Empire Layers</div>
+        <div class="section-subtitle">
+          From raw model calls to constitutional governance—how Prime Forge holds itself together.
+        </div>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="card-label">Layer I · Core</div>
+          <h2 class="card-title">Prime Forge OS &amp; AI7</h2>
+          <p class="card-body">
+            The central nervous system. It fans out to multiple AI providers, merges their outputs, and applies
+            governance before anything reaches a human. It is designed to be auditable, forkable, and hostile to
+            silent failure.
+          </p>
+          <div class="card-meta">
+            <span>Multi‑AI</span>
+            <span>Deterministic Routing</span>
+            <span>Audit Trails</span>
+          </div>
+        </article>
 
-<h2>The Empire</h2>
-<div class="section">
-  <div class="card">
-    The Empire is a distributed network of AI cores, dashboards, and operational nodes.  
-    It spans:
-    <ul>
-      <li>Prime Forge Core (V3 → V4 Genesis)</li>
-      <li>Elaira — The Executive Interface</li>
-      <li>Swarm Intelligence Layer</li>
-      <li>Autonomy Modes A–D</li>
-      <li>Identity Guard & Authorization System</li>
-    </ul>
-  </div>
+        <article class="card">
+          <div class="card-label">Layer II · Interface</div>
+          <h2 class="card-title">Elaira · The Voice of the Empire</h2>
+          <p class="card-body">
+            Elaira is the primary interface—an avatar, a console, and a personality. She doesn’t just answer; she
+            orchestrates, delegates to the swarm, and reflects the founder’s intent in how she speaks and what she
+            refuses to do.
+          </p>
+          <div class="card-meta">
+            <span>Avatar‑Ready</span>
+            <span>Context Memory</span>
+            <span>Human‑Aligned</span>
+          </div>
+        </article>
 
-  <div class="card">
-    Every deployment — Vercel, Azure, local, or hybrid — becomes part of the Empire’s living architecture.
-  </div>
-</div>
+        <article class="card">
+          <div class="card-label">Layer III · Governance</div>
+          <h2 class="card-title">Autonomy Modes &amp; Identity Guard</h2>
+          <p class="card-body">
+            Prime Forge runs under explicit autonomy modes (A–D) and a challenge‑response identity system. No hidden
+            god‑mode, no silent escalation. Every dangerous capability is gated by policy and by the founder’s
+            cryptographic consent.
+          </p>
+          <div class="card-meta">
+            <span>Mode A–D</span>
+            <span>Challenge‑Response</span>
+            <span>Hard Boundaries</span>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
 
-<footer>
-  Prime Forge © 2026 — Fire & Ice Incorporated  
-</footer>
-
+  <footer>
+    <div class="footer-inner">
+      <div>Prime Forge · V3 Core · Static Surface Online</div>
+      <div class="footer-links">
+        <a href="/status.html">System Status</a>
+        <a href="/api/chat">/api/chat</a>
+        <a href="/api/auth">/api/auth</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
