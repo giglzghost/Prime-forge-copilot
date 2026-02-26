@@ -1,5 +1,3 @@
-// src/ai/provider.ts
-
 type ProviderName = "openai" | "azure" | "mock";
 
 interface LLMRequest {
@@ -121,14 +119,10 @@ export async function runMultiAI(
   prompt: string,
   _modeHandler?: unknown
 ): Promise<MultiAIResult> {
-  // Hybrid strategy:
-  // - LLMs: parallel fan-out (OpenAI + Azure + Mock)
-  // - Selection: first non-mock success, else mock
   const tasks: Promise<LLMResponse>[] = [];
 
-  tasks.push(callMock({ prompt })); // always available
+  tasks.push(callMock({ prompt }));
 
-  // Try OpenAI in parallel if configured
   if (process.env.OPENAI_API_KEY) {
     tasks.push(
       callOpenAI({
@@ -137,7 +131,6 @@ export async function runMultiAI(
     );
   }
 
-  // Try Azure in parallel if configured
   if (process.env.AZURE_OPENAI_ENDPOINT && process.env.AZURE_OPENAI_KEY) {
     tasks.push(
       callAzure({
@@ -150,7 +143,6 @@ export async function runMultiAI(
 
   let primary: string | null = null;
 
-  // Prefer non-mock providers if they succeeded
   for (const r of results) {
     if (r.ok && r.provider !== "mock") {
       primary = r.text;
@@ -158,7 +150,6 @@ export async function runMultiAI(
     }
   }
 
-  // Fallback to mock
   if (!primary) {
     const mock = results.find((r) => r.provider === "mock");
     primary = mock?.text ?? null;
@@ -177,21 +168,14 @@ export async function generateImage(
 ): Promise<ImageResponse> {
   const provider = getProvider();
 
-  // Hybrid strategy for images:
-  // - Try configured provider first
-  // - Fallback chain: OpenAI -> Azure -> Mock
-
-  // If explicitly set to mock, just return mock
   if (provider === "mock") {
     return generateMockImage(req);
   }
 
-  // If configured for OpenAI
   if (provider === "openai") {
     try {
       return await generateOpenAIImage(req);
     } catch {
-      // fallback to Azure, then mock
       try {
         return await generateAzureImage(req);
       } catch {
@@ -200,12 +184,10 @@ export async function generateImage(
     }
   }
 
-  // If configured for Azure
   if (provider === "azure") {
     try {
       return await generateAzureImage(req);
     } catch {
-      // fallback to OpenAI, then mock
       try {
         return await generateOpenAIImage(req);
       } catch {
@@ -214,6 +196,5 @@ export async function generateImage(
     }
   }
 
-  // Default fallback
   return generateMockImage(req);
 }
