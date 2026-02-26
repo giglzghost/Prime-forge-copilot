@@ -1,0 +1,11 @@
+{
+  "rootHash": null,
+  "pendingChallenge": null,
+  "authorizedDomains": {},
+  "autonomy": {
+    "global": "A",
+    "financial": "A",
+    "business": "A",
+    "ai_creation": "A"
+  }
+}
