@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { evaluateAction } from '../core/policy';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -9,6 +10,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body || {};
     const message = body?.message ?? '(no message provided)';
 
+    const policy = evaluateAction(message);
+
+    if (!policy.allowed) {
+      return res.status(403).json({
+        ok: false,
+        message: 'Action requires founder escalation.',
+        reason: policy.reason,
+        escalate: true
+      });
+    }
+
     return res.status(200).json({
       ok: true,
       message: 'Prime Forge V3 chat stub online.',
@@ -17,7 +29,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         meta: {
           source: 'prime-forge-copilot',
           mode: 'stub',
-          note: 'Replace this with full routing once the build is stable.'
+          ethics: 'checked'
         }
       }
     });
