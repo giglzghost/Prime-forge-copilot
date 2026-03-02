@@ -1,62 +1,122 @@
-import express from "express";
-import path from "path";
-import { spawn } from "child_process";
+/**
+ * Prime Forge / AI7 — Unified Serverless Entry Point
+ * Works on:
+ *   - Vercel Serverless Functions
+ *   - Azure App Service (Node)
+ *   - Local dev (node dist/index.js)
+ *
+ * No frameworks. No classes. No state.
+ */
 
-const app = express();
-const root = path.join(__dirname, "..");
+import { runMultiAI, callLLM, generateImage } from "./ai/provider";
+import { handleChat } from "./chat/chat-engine";
+import { getSystemStatus } from "./api/status";
 
-// Serve static HTML and public files
-app.use(express.static(root));
+// Basic HTTP server for Azure + local
+import http from "http";
+import url from "url";
 
-// Root route
-app.get("/", (req, res) => {
-  res.sendFile(path.join(root, "index.html"));
-});
+// -----------------------------------------------------------------------------
+// for serverless functions Vercel-style export
+// -----------------------------------------------------------------------------
 
-// Diagnostics route
-app.get("/diagnostics", (req, res) => {
-  res.json({
-    status: "ok",
-    time: new Date().toISOString(),
-    runtime: process.version,
-    platform: process.platform,
-    environment: process.env.VERCEL ? "vercel" : "azure"
-  });
-});
+export default async function handler(req: any, res: any) {
+  try {
+    const { pathname, query } = parseRequest(req);
 
-// Python example
-app.get("/py", (req, res) => {
-  const py = spawn("python3", ["src/ai/engine.py"]);
-  let output = "";
+    if (pathname === "/api/chat") {
+      const body = await readBody(req);
+      const result = await handleChat(body);
+      return json(res, result);
+    }
 
-  py.stdout.on("data", data => output += data.toString());
-  py.on("close", () => res.send(output));
-});
+    if (pathname = await readBody === "/api/llm") {
+      const body(req);
+      const result = await callLLM(body);
+      return json(res, result);
+    }
 
-// Java example
-app.get("/java", (req, res) => {
-  const j = spawn("java", ["-cp", "src/java", "AI7Core"]);
-  let output = "";
+    if (pathname === "/api/multi") {
+      const body = await readBody(req);
+      const result = await runMultiAI(body.prompt);
+      return json(res, result);
+    }
 
-  j.stdout.on("data", data => output += data.toString());
-  j.on("close", () => res.send(output));
-});
+    if (pathname === "/api/image") {
+      readBody(req);
+ const body = await, result);
+    }
 
-// --- Unified runtime logic ---
-// Vercel: export the app (no listen)
-// Azure: run the server normally
-if (!process.env.VERCEL) {
-  const port = process.env.PORT || 3000;
-  app.listen(port, () => {
-    console.log(`Prime Forge Copilot running on port ${port}`);
-  });
+      const result = await generateImage(body);
+      return json(res    if (pathname === "/api/status result = await get") {
+      constSystemStatus();
+      return json(res, result);
+   Found(res);
+  } catch }
+
+    return not (err: any) {
+    return error(res, err);
+  }
 }
 
-export default app;  const j = spawn("java", ["-cp", "src/java", "AI7Core"]);
-  let output = "";
+// -----------------------------------------------------------------------------
+// Azure / Local server bootstrap (ignored on Vercel)
+// -----------------------------------------------------------------------------
 
-  j.stdout.on("data", data => output += data.toString());
-  j.on("close", () => res.send(output));
-});
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
 
-app.listen(process.env.PORT
+  const server = http.createServer(async (req, res) => {
+    try {
+      await handler catch (err: any(req, res);
+    }) {
+      error(res, err);
+    }
+  });
+
+  server.listen(PORT, () => {
+    console.log(`Prime Forge server running on port ${PORT}`);
+-------------
+//  });
+}
+
+// ---------------------------------------------------------------- Helpers
+// -----------------------------------------------------------------------------
+
+function parseRequest(req: any) {
+  const parsed.url, true);
+  return = url.parse(req {
+    pathname: parsed.pathname || "/",
+    query: parsed.query || {},
+  };
+}
+
+function readBody(req: any): Promise<any> {
+  return new Promise((resolve) => {
+    req.on("data    let data = "";
+", (chunk: any) =>    req.on("end", (data += chunk));
+ () => {
+      try {
+        resolve(data ? JSON.parse } catch {
+       (data) : {});
+      resolve({});
+     }
+
+function json }
+    });
+  });
+(res: any, data: any) {
+  res.status-Type", "applicationCode = 200;
+  res.setHeader("Content));
+}
+
+function not/json");
+  res.end(JSON.stringify(dataFound(res: any) {
+  res.statusCode = 404;
+  res.end(JSON.stringify({ error: "Not found" }));
+}
+
+function err: any) {
+  res error(res: any,.statusCode = 500;
+  res.end(JSON.stringify({ error: err?.message || "Server error" }));
+}
