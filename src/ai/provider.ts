@@ -28,23 +28,19 @@ function getProvider(): ProviderName {
   return "mock";
 }
 
-// --- Low-level single-provider calls ----------------------------------------
-
 async function callOpenAI(req: LLMRequest): Promise<LLMResponse> {
-  // TODO: wire real OpenAI SDK here
   return {
     text: `[OPENAI LLM] (not yet wired) ${req.prompt.slice(0, 200)}`,
     provider: "openai",
-    ok: true,
+    ok: true
   };
 }
 
 async function callAzure(req: LLMRequest): Promise<LLMResponse> {
-  // TODO: wire real Azure OpenAI SDK here
   return {
     text: `[AZURE LLM] (not yet wired) ${req.prompt.slice(0, 200)}`,
     provider: "azure",
-    ok: true,
+    ok: true
   };
 }
 
@@ -52,25 +48,23 @@ async function callMock(req: LLMRequest): Promise<LLMResponse> {
   return {
     text: `[MOCK LLM] ${req.prompt.slice(0, 200)}`,
     provider: "mock",
-    ok: true,
+    ok: true
   };
 }
 
 async function generateOpenAIImage(req: ImageRequest): Promise<ImageResponse> {
-  // TODO: wire real OpenAI image generation here
   return {
     url: `https://placehold.co/600x400?text=OPENAI`,
     provider: "openai",
-    ok: true,
+    ok: true
   };
 }
 
 async function generateAzureImage(req: ImageRequest): Promise<ImageResponse> {
-  // TODO: wire real Azure image generation here
   return {
     url: `https://placehold.co/600x400?text=AZURE`,
     provider: "azure",
-    ok: true,
+    ok: true
   };
 }
 
@@ -80,11 +74,9 @@ async function generateMockImage(req: ImageRequest): Promise<ImageResponse> {
       req.prompt.slice(0, 40)
     )}`,
     provider: "mock",
-    ok: true,
+    ok: true
   };
 }
-
-// --- Public LLM API (single best-effort call) -------------------------------
 
 export async function callLLM(req: LLMRequest): Promise<LLMResponse> {
   const provider = getProvider();
@@ -108,8 +100,6 @@ export async function callLLM(req: LLMRequest): Promise<LLMResponse> {
   return await callMock(req);
 }
 
-// --- Multi-AI fan-out for Prime Forge / AI7 ---------------------------------
-
 export interface MultiAIResult {
   primary: string | null;
   providers: LLMResponse[];
@@ -126,7 +116,7 @@ export async function runMultiAI(
   if (process.env.OPENAI_API_KEY) {
     tasks.push(
       callOpenAI({
-        prompt,
+        prompt
       })
     );
   }
@@ -134,7 +124,7 @@ export async function runMultiAI(
   if (process.env.AZURE_OPENAI_ENDPOINT && process.env.AZURE_OPENAI_KEY) {
     tasks.push(
       callAzure({
-        prompt,
+        prompt
       })
     );
   }
@@ -157,11 +147,9 @@ export async function runMultiAI(
 
   return {
     primary,
-    providers: results,
+    providers: results
   };
 }
-
-// --- Public image API (hybrid: sequential/fallback) -------------------------
 
 export async function generateImage(
   req: ImageRequest
