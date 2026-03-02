@@ -4,6 +4,7 @@ import { evaluateAction } from "./policy";
 import { respond as elairaRespond } from "../elaira/elaira-interface";
 import { route, RouteResponse } from "./router";
 import { getSwarm } from "./swarm";
+import { runMultiAI } from "../ai/provider";
 
 export interface AI7ChatRequest {
   userMessage: string;
@@ -52,6 +53,7 @@ export async function handleChat(req: AI7ChatRequest): Promise<AI7ChatResponse> 
     text = elaira.text;
     meta = { ...meta, elairaMeta: elaira.meta };
   } else {
+    const multi = await runMultiAI(req.userMessage);
     const routed: RouteResponse = route({
       type: "plan",
       action: "generate",
@@ -60,11 +62,15 @@ export async function handleChat(req: AI7ChatRequest): Promise<AI7ChatResponse> 
     });
 
     if (routed.ok && routed.data) {
-      text = formatPlanAsText(routed.data);
-      meta = { ...meta, routed };
+      text = [
+        multi.primary ?? "No primary LLM response available.",
+        "",
+        formatPlanAsText(routed.data)
+      ].join("\n");
+      meta = { ...meta, routed, multiAI: multi };
     } else {
-      text = `Mode ${mode}: I received your message and attempted to plan, but could not generate a structured response.`;
-      meta = { ...meta, routed };
+      text = multi.primary ?? "I received your message but could not generate a structured response.";
+      meta = { ...meta, routed, multiAI: multi };
     }
   }
 
@@ -102,7 +108,9 @@ function decideElairaDelegation(context: any): boolean {
     "explain",
     "feel",
     "story",
-    "conversation"
+    "conversation",
+    "what do you think",
+    "can we talk"
   ];
 
   const isConversational = conversationalHints.some((h) => msg.includes(h));
