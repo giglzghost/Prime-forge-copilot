@@ -1,3 +1,7 @@
+
+export const config = {
+  runtime: "nodejs18.x"
+};
 import { IncomingMessage, ServerResponse } from "http";
 import { sendJson } from "./_utils";
 import { route } from "../src/core/router";
