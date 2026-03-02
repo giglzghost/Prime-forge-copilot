@@ -1,8 +1,4 @@
 
-export const config = {
-  runtime: "nodejs18.x"
-};
-
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { evaluateAction } from '../core/policy';
 
