@@ -1,3 +1,8 @@
+export const config = {
+  runtime: "nodejs18.x"
+};
+
+
 import { IncomingMessage, ServerResponse } from "http";
 import { readJsonBody, sendJson } from "./_utils";
 import { runMultiAI } from "../src/ai/provider";
