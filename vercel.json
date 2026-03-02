@@ -1,8 +1,17 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "buildCommand": "npm run build",
-  "installCommand": "npm install",
-  "devCommand": "npm run dev",
-  "regions": ["iad1"]
+  "builds": [
+    { "src": "api/chat.ts", "use": "@vercel/node" },
+    { "src": "api/llm.ts", "use": "@vercel/node" },
+    { "src": "api/multi.ts", "use": "@vercel/node" },
+    { "src": "api/image.ts", "use": "@vercel/node" },
+    { "src": "api/status.ts", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/api/chat", "dest": "/api/chat.ts" },
+    { "src": "/api/llm", "dest": "/api/llm.ts" },
+    { "src": "/api/multi", "dest": "/api/multi.ts" },
+    { "src": "/api/image", "dest": "/api/image.ts" },
+    { "src": "/api/status", "dest": "/api/status.ts" }
+  ]
 }
