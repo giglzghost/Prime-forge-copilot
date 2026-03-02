@@ -1,3 +1,9 @@
+
+export const config = {
+  runtime: "nodejs18.x"
+};
+
+
 import { IncomingMessage, ServerResponse } from "http";
 import { readJsonBody, sendJson } from "./_utils";
 import { handleChat } from "../src/core/ai7";
