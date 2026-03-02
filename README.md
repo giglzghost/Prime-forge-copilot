@@ -161,3 +161,17 @@ The current architecture leaves room for a **Sentinel** subsystem that:
 Nothing in this code conflicts with that design.
 
 ---
+
+Build and run
+
+`bash
+npm install
+npm run build
+npm start
+`
+
+For local dev:
+
+`bash
+npm run dev
+`
