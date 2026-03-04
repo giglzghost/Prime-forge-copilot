@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
+    "prebuild": "node scripts/fix-vercel-build.js",
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts"
@@ -13,10 +14,5 @@
   "devDependencies": {
     "@types/node": "^22.0.0",
     "typescript": "^5.6.0"
-  },
-"scripts": {
-  "prebuild": "node scripts/fix-vercel-build.js",
-  "build": "tsc"
-}
-  
+  }
 }
