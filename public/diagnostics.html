@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Prime Forge Diagnostics</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { background:#0a0a0a; color:#eee; font-family:Segoe UI; padding:40px; }
+h1 { color:#ff9900; }
+textarea { width:100%; height:120px; background:#111; color:#eee; border:1px solid #333; padding:10px; }
+button { padding:10px 20px; background:#ff9900; border:none; border-radius:6px; cursor:pointer; margin-top:10px; }
+button:hover { background:#cc7a00; }
+pre { background:#111; padding:20px; border-radius:10px; margin-top:20px; }
+</style>
+</head>
+<body>
+
+<h1>Prime Forge Diagnostics</h1>
+
+<h3>Test /api/chat</h3>
+<textarea id="chatInput">{ "message": "Hello Prime Forge" }</textarea>
+<button onclick="sendChat()">Send</button>
+<pre id="chatOut"></pre>
+
+<h3>Test /api/auth</h3>
+<textarea id="authInput">{ "action": "request" }</textarea>
+<button onclick="sendAuth()">Send</button>
+<pre id="authOut"></pre>
+
+<h3>Test /api/avatar</h3>
+<textarea id="avatarInput">{ "prompt": "Elaira avatar test" }</textarea>
+<button onclick="sendAvatar()">Send</button>
+<pre id="avatarOut"></pre>
+
+<script>
+async function sendChat() {
+  const out = document.getElementById("chatOut");
+  out.textContent = "Sending...";
+  const body = document.getElementById("chatInput").value;
+  const res = await fetch("/api/chat", { method:"POST", headers:{ "Content-Type":"application/json" }, body });
+  out.textContent = await res.text();
+}
+
+async function sendAuth() {
+  const out = document.getElementById("authOut");
+  out.textContent = "Sending...";
+  const body = document.getElementById("authInput").value;
+  const res = await fetch("/api/auth", { method:"POST", headers:{ "Content-Type":"application/json" }, body });
+  out.textContent = await res.text();
+}
+
+async function sendAvatar() {
+  const out = document.getElementById("avatarOut");
+  out.textContent = "Sending...";
+  const body = document.getElementById("avatarInput").value;
+  const res = await fetch("/api/avatar", { method:"POST", headers:{ "Content-Type":"application/json" }, body });
+  out.textContent = await res.text();
+}
+</script>
+
+</body>
+</html>
