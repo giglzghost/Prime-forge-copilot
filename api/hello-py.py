@@ -1,3 +1,7 @@
+
+export const config = {
+  runtime: "nodejs18.x"
+};
 def handler(request):
     return {
         "language": "Python",
