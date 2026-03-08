@@ -1,3 +1,8 @@
+export const config = {
+  runtime: "nodejs18.x"
+};
+
+
 import { IncomingMessage, ServerResponse } from "http";
 
 export async function readJsonBody(req: IncomingMessage): Promise<any> {
