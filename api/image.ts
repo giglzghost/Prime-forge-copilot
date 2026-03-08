@@ -2,12 +2,14 @@ export const config = {
   runtime: "nodejs"
 };
 
-
 import { IncomingMessage, ServerResponse } from "http";
 import { readJsonBody, sendJson } from "./_utils";
 import { generateImage } from "../src/ai/provider";
 
-export default async function handler(req: IncomingMessage | any, res: ServerResponse | any) {
+export default async function handler(
+  req: IncomingMessage | any,
+  res: ServerResponse | any
+) {
   if (req.method !== "POST") {
     return sendJson(res, 405, { error: "Method not allowed" });
   }
@@ -19,7 +21,10 @@ export default async function handler(req: IncomingMessage | any, res: ServerRes
     return sendJson(res, 400, { error: "Missing prompt" });
   }
 
-  const result = await generateImage({ prompt, size: body?.size });
+  const result = await generateImage({
+    prompt,
+    size: body?.size
+  });
 
   return sendJson(res, 200, result);
 }
