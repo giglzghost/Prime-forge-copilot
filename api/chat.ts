@@ -1,14 +1,15 @@
-
 export const config = {
   runtime: "nodejs"
 };
-
 
 import { IncomingMessage, ServerResponse } from "http";
 import { readJsonBody, sendJson } from "./_utils";
 import { handleChat } from "../src/core/ai7";
 
-export default async function handler(req: IncomingMessage | any, res: ServerResponse | any) {
+export default async function handler(
+  req: IncomingMessage | any,
+  res: ServerResponse | any
+) {
   if (req.method !== "POST") {
     return sendJson(res, 405, { error: "Method not allowed" });
   }
