@@ -1,6 +1,6 @@
 
 export const config = {
-  runtime: "nodejs18.x"
+  runtime: "nodejs"
 };
 def handler(request):
     return {
