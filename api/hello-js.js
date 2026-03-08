@@ -2,8 +2,11 @@ export const config = {
   runtime: "nodejs"
 };
 
+import { IncomingMessage, ServerResponse } from "http";
+import { sendJson } from "./_utils";
+
 export default function handler(req, res) {
-  res.status(200).json({
+  return sendJson(res, 200, {
     language: "JavaScript",
     message: "JS serverless function OK",
     time: new Date().toISOString()
