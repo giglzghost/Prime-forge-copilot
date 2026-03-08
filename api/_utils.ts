@@ -2,7 +2,6 @@ export const config = {
   runtime: "nodejs"
 };
 
-
 import { IncomingMessage, ServerResponse } from "http";
 
 export async function readJsonBody(req: IncomingMessage): Promise<any> {
