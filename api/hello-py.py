@@ -1,7 +1,3 @@
-
-export const config = {
-  runtime: "nodejs"
-};
 def handler(request):
     return {
         "language": "Python",
