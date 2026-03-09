@@ -1,4 +1,4 @@
-name: PrimeForge V3 Deploy
+name: PrimeForge V3 – Azure Deploy
 
 on:
   push:
@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node
+      - name: Set up Node 22
         uses: actions/setup-node@v3
         with:
           node-version: 22
@@ -20,8 +20,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build project
+      - name: Build project (TypeScript → dist/)
         run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist/
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
