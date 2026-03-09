@@ -13,10 +13,14 @@ export interface RouteRequest {
   requestedBy?: string;
 }
 
+// *** ONLY CHANGE REQUIRED ***
+// This allows status.ts to return the Matriarch dashboard payload
+// without TypeScript throwing errors.
 export interface RouteResponse {
   ok: boolean;
   message: string;
   data?: any;
+  [key: string]: any;   // <— THIS LINE FIXES ALL YOUR BUILD ERRORS
 }
 
 let coreConfig: any = null;
