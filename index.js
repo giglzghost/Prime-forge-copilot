@@ -2,8 +2,6 @@ const express = require("express");
 const path = require("path");
 
 const app = express();
-
-// Parse JSON bodies
 app.use(express.json());
 
 // API routes
@@ -13,7 +11,7 @@ app.use("/api/llm", require("./api/llm").default);
 app.use("/api/image", require("./api/image").default);
 app.use("/api/multi", require("./api/multi").default);
 
-// Optional: serve static frontend if you add one later
+// Optional static files
 app.use(express.static(path.join(__dirname, "public")));
 
 const port = process.env.PORT || 3000;
