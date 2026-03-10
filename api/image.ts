@@ -2,7 +2,7 @@ export const config = {
   runtime: "nodejs"
 };
 
-import { IncomingMessage, ServerResponse } from "http";
+import type { IncomingMessage, ServerResponse } from "http";
 import { readJsonBody, sendJson } from "./_utils";
 import { generateImage } from "../src/ai/provider";
 
