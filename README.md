@@ -3,7 +3,7 @@ restored original intent using newer ai logic
 -
 # Prime Forge Empire – Architecture C
 
-
+-
 ## Overview
 
 - **AI7 (Prime Forge):** central governor with full empire responsibility. All external requests ultimately answer to AI7.
