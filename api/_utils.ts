@@ -19,7 +19,6 @@ export async function readJsonBody(req: IncomingMessage): Promise<any> {
 }
 
 export function sendJson(res: ServerResponse | any, status: number, payload: any) {
-  // Azure App Service: raw Node HTTP
   res.statusCode = status;
   res.setHeader("Content-Type", "application/json");
   res.end(JSON.stringify(payload));
