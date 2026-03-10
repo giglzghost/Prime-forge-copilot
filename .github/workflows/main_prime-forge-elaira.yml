@@ -14,7 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      steps:
+
+    steps:
       - uses: actions/checkout@v4
 
       - name: Set up Node.js version
@@ -40,7 +41,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-      
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
@@ -51,8 +52,8 @@ jobs:
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D8A721D942DD4105A99E2DA493FA505C }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_409D3B1A788F43878A70508E7F6CD5C4 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_62101A511CB846538ADE58C72D40B6BD}}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_409D3B1A788F43878A70508E7F6CD5C4  }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_62101A511CB846538ADE58C72D40B6BD }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -61,4 +62,3 @@ jobs:
           app-name: 'prime-forge-elaira'
           slot-name: 'Production'
           package: .
-
