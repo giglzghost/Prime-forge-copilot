@@ -2,7 +2,7 @@ export const config = {
   runtime: "nodejs"
 };
 
-import { IncomingMessage, ServerResponse } from "http";
+import type { IncomingMessage, ServerResponse } from "http";
 import { sendJson } from "./_utils";
 import { route } from "../src/core/router";
 
@@ -52,11 +52,7 @@ export default async function handler(
       style: "star-forged-nebula",
       parallax: 0.35,
       fractalBloomIntensity: 0.55,
-      colorSet: [
-        "#f7e08a", // Matriarch gold
-        "#3df2ff", // turquoise energy
-        "#7b2ff7"  // violet depth
-      ],
+      colorSet: ["#f7e08a", "#3df2ff", "#7b2ff7"],
       panelSeams: true,
       substrateGeometry: "hex-fractal"
     },
@@ -84,7 +80,7 @@ export default async function handler(
       motion: {
         pulseSpeed: agent.pulseSpeed ?? (1 + agent.load * 0.5),
         shimmer: agent.shimmer ?? 0.4,
-        rotation: agent.rotation ?? (agent.load * 45)
+        rotation: agent.rotation ?? agent.load * 45
       },
       decisionSignature: {
         lastDecision: agent.lastDecision,
@@ -117,13 +113,7 @@ export default async function handler(
           "hologram",
           "fractal-light"
         ],
-        actions: [
-          "pause",
-          "boost",
-          "isolate",
-          "resetContext",
-          "toggleAvatar"
-        ]
+        actions: ["pause", "boost", "isolate", "resetContext", "toggleAvatar"]
       }
     })),
 
