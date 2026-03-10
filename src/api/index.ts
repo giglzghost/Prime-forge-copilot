@@ -1,7 +1,5 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-
-export default function handler(req: VercelRequest, res: VercelResponse) {
-  res.status(200).json({
+export function getApiIndex() {
+  return {
     ok: true,
     message: "Prime Forge Copilot API root.",
     endpoints: [
@@ -11,5 +9,5 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
       "/api/memory",
       "/api/modes"
     ]
-  });
+  };
 }
