@@ -1,18 +1,12 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { route } from "../core/router";
 
-export default function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ ok: false, message: "Use POST." });
-  }
-
-  const body = req.body || {};
+export function generatePlan(payload: any) {
   const result = route({
     type: "plan",
     action: "generate",
-    payload: { goal: body.goal },
-    requestedBy: body.requestedBy || "http-api"
+    payload: { goal: payload.goal },
+    requestedBy: payload.requestedBy || "internal"
   });
 
-  res.status(result.ok ? 200 : 400).json(result);
+  return result;
 }
