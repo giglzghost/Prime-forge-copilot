@@ -2,7 +2,7 @@ export const config = {
   runtime: "nodejs"
 };
 
-import { IncomingMessage, ServerResponse } from "http";
+import type { IncomingMessage, ServerResponse } from "http";
 
 export async function readJsonBody(req: IncomingMessage): Promise<any> {
   return new Promise((resolve) => {
@@ -19,12 +19,8 @@ export async function readJsonBody(req: IncomingMessage): Promise<any> {
 }
 
 export function sendJson(res: ServerResponse | any, status: number, payload: any) {
-  if (typeof res.status === "function" && typeof res.json === "function") {
-    return res.status(status).json(payload);
-  }
+  // Azure App Service: raw Node HTTP
   res.statusCode = status;
-  if (typeof res.setHeader === "function") {
-    res.setHeader("Content-Type", "application/json");
-  }
+  res.setHeader("Content-Type", "application/json");
   res.end(JSON.stringify(payload));
 }
