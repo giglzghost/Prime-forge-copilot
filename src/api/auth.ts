@@ -1,4 +1,3 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
 import nodemailer from "nodemailer";
 import fs from "fs";
 import path from "path";
@@ -71,104 +70,89 @@ async function sendChallengeEmail(token: string) {
   await transporter.sendMail(mailOptions);
 }
 
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse
-) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ ok: false, message: "Use POST." });
-  }
+// INTERNAL MODULE API
 
-  const body = req.body || {};
-  const action = body.action;
+export async function requestAuthChallenge() {
+  const identity = loadIdentityCore();
+  const token = createChallengeToken();
 
-  if (action === "request") {
-    const identity = loadIdentityCore();
-    const token = createChallengeToken();
+  identity.pendingChallenge = {
+    token,
+    createdAt: Date.now()
+  };
 
-    identity.pendingChallenge = {
-      token,
-      createdAt: Date.now()
+  saveIdentityCore(identity);
+
+  try {
+    await sendChallengeEmail(token);
+  } catch (err: any) {
+    console.error("AUTH EMAIL ERROR:", err);
+    return {
+      ok: false,
+      message: "Failed to send challenge email."
     };
-
-    saveIdentityCore(identity);
-
-    try {
-      await sendChallengeEmail(token);
-    } catch (err: any) {
-      console.error("AUTH EMAIL ERROR:", err);
-      return res.status(500).json({
-        ok: false,
-        message: "Failed to send challenge email."
-      });
-    }
-
-    return res.status(200).json({
-      ok: true,
-      message: "Challenge email sent."
-    });
   }
 
-  if (action === "confirm") {
-    const { token, rootPhrase, domains, keys } = body;
+  return {
+    ok: true,
+    message: "Challenge email sent."
+  };
+}
 
-    if (!token || !rootPhrase) {
-      return res.status(400).json({
-        ok: false,
-        message: "Missing 'token' or 'rootPhrase'."
-      });
-    }
+export async function confirmAuthChallenge(payload: any) {
+  const { token, rootPhrase, domains, keys } = payload;
 
-    const identity = loadIdentityCore();
+  if (!token || !rootPhrase) {
+    return {
+      ok: false,
+      message: "Missing 'token' or 'rootPhrase'."
+    };
+  }
 
-    if (
-      !identity.pendingChallenge ||
-      identity.pendingChallenge.token !== token
-    ) {
-      return res.status(400).json({
-        ok: false,
-        message: "Invalid or expired challenge token."
-      });
-    }
+  const identity = loadIdentityCore();
 
-    const maxAgeMs = 15 * 60 * 1000;
-    if (Date.now() - identity.pendingChallenge.createdAt > maxAgeMs) {
-      identity.pendingChallenge = null;
-      saveIdentityCore(identity);
-      return res.status(400).json({
-        ok: false,
-        message: "Challenge token expired."
-      });
-    }
+  if (
+    !identity.pendingChallenge ||
+    identity.pendingChallenge.token !== token
+  ) {
+    return {
+      ok: false,
+      message: "Invalid or expired challenge token."
+    };
+  }
 
-    identity.rootHash = hashPhrase(rootPhrase);
+  const maxAgeMs = 15 * 60 * 1000;
+  if (Date.now() - identity.pendingChallenge.createdAt > maxAgeMs) {
     identity.pendingChallenge = null;
-
-    if (domains && typeof domains === "object") {
-      identity.autonomy = {
-        ...identity.autonomy,
-        ...domains
-      };
-    }
-
-    if (keys && typeof keys === "object") {
-      identity.authorizedDomains = {
-        ...identity.authorizedDomains,
-        keysProvided: true
-      };
-    }
-
     saveIdentityCore(identity);
-
-    return res.status(200).json({
-      ok: true,
-      message: "Authorization confirmed and root identity set.",
-      autonomy: identity.autonomy
-    });
+    return {
+      ok: false,
+      message: "Challenge token expired."
+    };
   }
 
-  return res.status(400).json({
-    ok: false,
-    message: "Unknown 'action'. Use 'request' or 'confirm'."
-  });
+  identity.rootHash = hashPhrase(rootPhrase);
+  identity.pendingChallenge = null;
+
+  if (domains && typeof domains === "object") {
+    identity.autonomy = {
+      ...identity.autonomy,
+      ...domains
+    };
+  }
+
+  if (keys && typeof keys === "object") {
+    identity.authorizedDomains = {
+      ...identity.authorizedDomains,
+      keysProvided: true
+    };
+  }
+
+  saveIdentityCore(identity);
+
+  return {
+    ok: true,
+    message: "Authorization confirmed and root identity set.",
+    autonomy: identity.autonomy
+  };
 }
