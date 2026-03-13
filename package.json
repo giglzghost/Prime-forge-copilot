@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "prebuild": "node scripts/fix-vercel-build.js",
+    "prebuild": "",
     "build": "tsc -p tsconfig.json",
     "start": "node dost/index.js",
     "dev": "ts-node src/index.ts"
