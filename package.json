@@ -5,7 +5,7 @@
   "scripts": {
     "prebuild": "",
     "build": "tsc -p tsconfig.json",
-    "start": "node dost/index.js",
+    "start": "node dist/index.js",
     "dev": "ts-node src/index.ts"
   },
   "dependencies": {
