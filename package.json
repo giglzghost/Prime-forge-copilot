@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-  "prebuild": "",
-  "build": "tsc -p tsconfig.json",
-  "postbuild": "mkdir -p ./deploy && cp -r dist ./deploy/",
-  "start": "node dist/index.js",
-  "dev": "ts-node src/index.ts"
+    "build": "tsc -p tsconfig.json",
+    "postbuild": "mkdir -p deploy && cp -r dist deploy/",
+    "start": "node deploy/dist/index.js",
+    "dev": "ts-node src/index.ts"
   },
   "dependencies": {
     "express": "^4.19.2",
@@ -24,7 +23,3 @@
     "node": "22.x"
   }
 }
-
-
-
-
