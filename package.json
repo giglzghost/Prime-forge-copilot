@@ -1,12 +1,12 @@
 {
   "name": "prime-forge-empire",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "dist/index.js",
   "scripts": {
     "prebuild": "node scripts/fix-vercel-build.js",
     "build": "tsc -p tsconfig.json",
-    "start": "node server.js",
-    "dev": "ts-node src/server.ts"
+    "start": "node dost/index.js",
+    "dev": "ts-node src/index.ts"
   },
   "dependencies": {
     "express": "^4.19.2",
