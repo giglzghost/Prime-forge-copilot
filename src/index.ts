@@ -27,11 +27,10 @@ function createServer() {
   return server;
 }
 
-if (require.main === module) {
-  const server = createServer();
-  server.listen(PORT, () => {
-    console.log(`Prime Forge server running on port ${PORT}`);
-  });
-}
+const server = createServer();
+server.listen(PORT, () => {
+  console.log(`Prime Forge server running on port ${PORT}`);
+});
+
 
 export default createServer;
