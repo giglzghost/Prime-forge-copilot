@@ -32,5 +32,4 @@ server.listen(PORT, () => {
   console.log(`Prime Forge server running on port ${PORT}`);
 });
 
-
 export default createServer;
