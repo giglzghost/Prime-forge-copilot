@@ -1,11 +1,11 @@
 {
   "name": "prime-forge-empire",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "postbuild": "mkdir -p deploy && cp -r dist deploy/",
-    "start": "node deploy/dist/index.js",
+    "postbuild": "cp -r dist/* .",
+    "start": "node index.js",
     "dev": "ts-node src/index.ts"
   },
   "dependencies": {
