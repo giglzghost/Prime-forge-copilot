@@ -1,12 +1,12 @@
 {
   "name": "prime-forge-empire",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "server.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "postbuild": "",
-    "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts"
+    "start": "node server.js",
+    "dev": "ts-node server.ts"
   },
   "dependencies": {
     "express": "^4.19.2",
