@@ -5,6 +5,7 @@
   <title>Prime Forge | The Empire of Autonomous Intelligence</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Prime Forge – a multidimensional AI empire for strategy, creation, and governance." />
+
   <style>
     :root {
       --bg: #050712;
@@ -21,11 +22,7 @@
       --radius: 18px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
@@ -46,6 +43,7 @@
       z-index: 0;
     }
 
+    /* HEADER */
     header {
       position: sticky;
       top: 0;
@@ -65,11 +63,7 @@
       gap: 16px;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .brand { display: flex; align-items: center; gap: 10px; }
 
     .brand-logo {
       width: 32px;
@@ -90,23 +84,9 @@
       box-shadow: inset 0 0 18px rgba(15, 23, 42, 0.9);
     }
 
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-    }
-
-    .brand-title {
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-    }
-
-    .brand-subtitle {
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
+    .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .brand-title { font-weight: 700; letter-spacing: 0.08em; font-size: 0.9rem; text-transform: uppercase; }
+    .brand-subtitle { font-size: 0.75rem; color: var(--muted); }
 
     .nav-links {
       display: flex;
@@ -141,12 +121,7 @@
       background: radial-gradient(circle at top left, rgba(75, 227, 255, 0.2), transparent 60%);
     }
 
-    main {
-      flex: 1;
-      position: relative;
-      z-index: 1;
-    }
-
+    /* HERO */
     .hero {
       max-width: 1120px;
       margin: 0 auto;
@@ -158,10 +133,7 @@
     }
 
     @media (max-width: 880px) {
-      .hero {
-        grid-template-columns: minmax(0, 1fr);
-        padding-top: 28px;
-      }
+      .hero { grid-template-columns: minmax(0, 1fr); padding-top: 28px; }
     }
 
     .hero-kicker {
@@ -248,10 +220,7 @@
       box-shadow: var(--glow), var(--glow-ice);
     }
 
-    .btn-primary:hover {
-      filter: brightness(1.05);
-      transform: translateY(-1px);
-    }
+    .btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
 
     .btn-ghost {
       border-color: rgba(148, 163, 184, 0.5);
@@ -264,25 +233,23 @@
       border-color: rgba(148, 163, 184, 0.9);
       background: rgba(15, 23, 42, 0.95);
     }
-
-    .hero-footnote {
+.hero-footnote {
       font-size: 0.75rem;
       color: var(--muted);
       margin-top: 6px;
     }
 
-    .hero-visual {
-      position: relative;
-      min-height: 260px;
-    }
+    /* ORBITAL VISUAL */
+    .hero-visual { position: relative; min-height: 260px; }
 
     .orbital {
       position: absolute;
       inset: 0;
       border-radius: 24px;
-      background: radial-gradient(circle at top, rgba(255, 75, 154, 0.18), transparent 60%),
-                  radial-gradient(circle at bottom, rgba(75, 227, 255, 0.18), transparent 60%),
-                  linear-gradient(145deg, #050712, #050712, #0b1022);
+      background:
+        radial-gradient(circle at top, rgba(255, 75, 154, 0.18), transparent 60%),
+        radial-gradient(circle at bottom, rgba(75, 227, 255, 0.18), transparent 60%),
+        linear-gradient(145deg, #050712, #050712, #0b1022);
       border: 1px solid rgba(148, 163, 184, 0.35);
       box-shadow:
         0 0 0 1px rgba(15, 23, 42, 0.9),
@@ -301,10 +268,7 @@
       color: var(--muted);
     }
 
-    .orbital-badges {
-      display: flex;
-      gap: 6px;
-    }
+    .orbital-badges { display: flex; gap: 6px; }
 
     .orbital-badge {
       width: 8px;
@@ -343,9 +307,10 @@
     .orbital-core-main {
       position: relative;
       border-radius: 18px;
-      background: radial-gradient(circle at 30% 0, rgba(255, 75, 154, 0.4), transparent 60%),
-                  radial-gradient(circle at 80% 100%, rgba(75, 227, 255, 0.4), transparent 60%),
-                  linear-gradient(145deg, #050712, #050712, #050712);
+      background:
+        radial-gradient(circle at 30% 0, rgba(255, 75, 154, 0.4), transparent 60%),
+        radial-gradient(circle at 80% 100%, rgba(75, 227, 255, 0.4), transparent 60%),
+        linear-gradient(145deg, #050712, #050712, #050712);
       border: 1px solid rgba(148, 163, 184, 0.4);
       overflow: hidden;
       display: flex;
@@ -395,17 +360,8 @@
       box-shadow: 0 0 10px rgba(75, 227, 255, 0.9);
     }
 
-    .orbital-core-orbit:nth-child(1) {
-      top: 8%;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .orbital-core-orbit:nth-child(2) {
-      bottom: 10%;
-      left: 18%;
-    }
-
+    .orbital-core-orbit:nth-child(1) { top: 8%; left: 50%; transform: translateX(-50%); }
+    .orbital-core-orbit:nth-child(2) { bottom: 10%; left: 18%; }
     .orbital-core-orbit:nth-child(3) {
       bottom: 16%;
       right: 14%;
@@ -452,10 +408,9 @@
       color: var(--text);
     }
 
-    .orbital-chip-body span {
-      color: var(--accent-ice);
-    }
+    .orbital-chip-body span { color: var(--accent-ice); }
 
+    /* ARCHITECTURE GRID */
     .section {
       max-width: 1120px;
       margin: 0 auto;
@@ -489,16 +444,15 @@
     }
 
     @media (max-width: 880px) {
-      .grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
+      .grid { grid-template-columns: minmax(0, 1fr); }
     }
 
     .card {
       border-radius: var(--radius);
-      background: radial-gradient(circle at top left, rgba(255, 75, 154, 0.12), transparent 60%),
-                  radial-gradient(circle at bottom right, rgba(75, 227, 255, 0.12), transparent 60%),
-                  linear-gradient(145deg, #050712, #050712, #050712);
+      background:
+        radial-gradient(circle at top left, rgba(255, 75, 154, 0.12), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(75, 227, 255, 0.12), transparent 60%),
+        linear-gradient(145deg, #050712, #050712, #050712);
       border: 1px solid rgba(148, 163, 184, 0.35);
       padding: 14px 14px 16px;
       box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
@@ -538,7 +492,7 @@
       border: 1px solid rgba(148, 163, 184, 0.4);
       background: rgba(15, 23, 42, 0.9);
     }
-
+/* FOOTER */
     footer {
       border-top: 1px solid rgba(148, 163, 184, 0.2);
       background: radial-gradient(circle at bottom, #050712, #020308);
@@ -557,193 +511,266 @@
       align-items: center;
     }
 
-    .footer-links {
+    /* HYBRID COLLAPSIBLE GROUPS */
+    .footer-panels {
       display: flex;
-      gap: 10px;
+      gap: 16px;
       flex-wrap: wrap;
     }
 
-    .footer-links a {
+    .footer-group {
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 12px;
+      padding: 6px 10px;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(6px);
+      min-width: 140px;
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.9),
+        0 0 18px rgba(75, 227, 255, 0.15),
+        0 0 18px rgba(255, 75, 154, 0.15);
+    }
+
+    .footer-group summary {
+      cursor: pointer;
+      font-size: 0.78rem;
+      color: var(--accent-ice);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 4px 0;
+    }
+
+    .footer-group summary:hover {
+      color: var(--text);
+    }
+
+    .footer-group-links {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .footer-group-links a {
       color: var(--muted);
       text-decoration: none;
+      font-size: 0.75rem;
       padding: 3px 6px;
-      border-radius: 999px;
-      border: 1px solid transparent;
+      border-radius: 8px;
       transition: all 0.16s ease-out;
     }
 
-    .footer-links a:hover {
-      border-color: rgba(148, 163, 184, 0.5);
+    .footer-group-links a:hover {
       color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(148, 163, 184, 0.5);
     }
+
   </style>
 </head>
+
 <body>
   <div class="noise"></div>
 
-  <header>
-    <div class="nav">
-      <div class="brand">
-        <div class="brand-logo"></div>
-        <div class="brand-text">
-          <div class="brand-title">Prime Forge</div>
-          <div class="brand-subtitle">Autonomous Intelligence Empire</div>
-        </div>
-      </div>
-      <div class="nav-links">
-        <div class="nav-pill">V3 · Core Online</div>
-        <a href="/status.html">Status</a>
-        <a href="/api/chat" title="Raw API endpoint (expects POST)">/api/chat</a>
-        <a href="/api/auth" title="Auth endpoint (expects POST)">/api/auth</a>
+<header>
+  <div class="nav">
+    <div class="brand">
+      <div class="brand-logo"></div>
+      <div class="brand-text">
+        <div class="brand-title">Prime Forge</div>
+        <div class="brand-subtitle">Autonomous Intelligence Empire</div>
       </div>
     </div>
-  </header>
 
-  <main>
-    <section class="hero">
-      <div>
-        <div class="hero-kicker">
-          <span></span>
-          <div>Live Node · Vercel / Azure Ready · Human‑in‑the‑Loop</div>
+    <div class="nav-links">
+      <div class="nav-pill">V3 · Core Online</div>
+      <a href="/status.html">Status</a>
+      <a href="/api/chat">/api/chat</a>
+      <a href="/api/auth">/api/auth</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div>
+      <div class="hero-kicker">
+        <span></span>
+        <div>Live Node · Azure Ready · Human‑in‑the‑Loop</div>
+      </div>
+
+      <h1 class="hero-title">
+        The <span>Prime Forge Empire</span><br />
+        for strategy, creation, and control.
+      </h1>
+
+      <p class="hero-subtitle">
+        Prime Forge is a multidimensional AI operating system—built to orchestrate swarms of agents,
+        defend its own integrity, and still answer a single human’s question with precision.
+        It is not a chatbot. It is an empire with a constitution.
+      </p>
+
+      <div class="hero-meta">
+        <span>Core: V3 · Node / TypeScript</span>
+        <span>Surface: Elaira Interface</span>
+        <span>Backbone: Multi‑AI Provider</span>
+      </div>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/status.html">System Status ↗</a>
+        <a class="btn btn-ghost" href="#architecture">Explore the Empire Map</a>
+      </div>
+
+      <div class="hero-footnote">
+        This page is static by design. If you can see this, the deployment is alive—even if the AI is not.
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="orbital">
+        <div class="orbital-header">
+          <div class="orbital-badges">
+            <div class="orbital-badge"></div>
+            <div class="orbital-badge"></div>
+            <div class="orbital-badge"></div>
+          </div>
+          <div class="orbital-title">Prime Forge · Empire Topology</div>
         </div>
-        <h1 class="hero-title">
-          The <span>Prime Forge Empire</span><br />
-          for strategy, creation, and control.
-        </h1>
-        <p class="hero-subtitle">
-          Prime Forge is a multidimensional AI operating system—built to orchestrate swarms of agents, defend its own
-          integrity, and still answer a single human’s question with precision. It is not a chatbot. It is an empire
-          with a constitution.
+
+        <div class="orbital-core">
+          <div class="orbital-core-main">
+            <div class="orbital-core-ring">
+              <div class="orbital-core-node"></div>
+              <div class="orbital-core-orbit"></div>
+              <div class="orbital-core-orbit"></div>
+              <div class="orbital-core-orbit"></div>
+            </div>
+            <div class="orbital-core-label">AI7 · Foundational Core</div>
+          </div>
+
+          <div class="orbital-side">
+            <div class="orbital-chip">
+              <div class="orbital-chip-title">Elaira · Interface</div>
+              <div class="orbital-chip-body">
+                Human‑facing avatar and console. Speaks for the empire, routes to the right mind, remembers context.
+              </div>
+            </div>
+
+            <div class="orbital-chip">
+              <div class="orbital-chip-title">Swarm · Agents</div>
+              <div class="orbital-chip-body">
+                Specialized workers for <span>research</span>, <span>creation</span>, <span>governance</span>,
+                and <span>defense</span>.
+              </div>
+            </div>
+
+            <div class="orbital-chip">
+              <div class="orbital-chip-title">Guard · Identity</div>
+              <div class="orbital-chip-body">
+                Challenge‑response, autonomy modes, and hard boundaries. The empire answers to one founder.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="architecture" class="section">
+    <div class="section-header">
+      <div class="section-title">Empire Layers</div>
+      <div class="section-subtitle">
+        From raw model calls to constitutional governance—how Prime Forge holds itself together.
+      </div>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="card-label">Layer I · Core</div>
+        <h2 class="card-title">Prime Forge OS &amp; AI7</h2>
+        <p class="card-body">
+          The central nervous system. It fans out to multiple AI providers, merges their outputs,
+          and applies governance before anything reaches a human.
         </p>
-        <div class="hero-meta">
-          <span>Core: V3 · Node / TypeScript</span>
-          <span>Surface: Elaira Interface</span>
-          <span>Backbone: Multi‑AI Provider (OpenAI / Azure / Mock)</span>
+        <div class="card-meta">
+          <span>Multi‑AI</span>
+          <span>Deterministic Routing</span>
+          <span>Audit Trails</span>
         </div>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="/status.html">
-            System Status &nbsp;↗
-          </a>
-          <a class="btn btn-ghost" href="#architecture">
-            Explore the Empire Map
-          </a>
+      </article>
+
+      <article class="card">
+        <div class="card-label">Layer II · Interface</div>
+        <h2 class="card-title">Elaira · The Voice of the Empire</h2>
+        <p class="card-body">
+          Elaira is the primary interface—an avatar, a console, and a personality. She orchestrates,
+          delegates to the swarm, and reflects the founder’s intent.
+        </p>
+        <div class="card-meta">
+          <span>Avatar‑Ready</span>
+          <span>Context Memory</span>
+          <span>Human‑Aligned</span>
         </div>
-        <div class="hero-footnote">
-          This page is static by design. If you can see this, the deployment is alive—even if the AI is not.
+      </article>
+
+      <article class="card">
+        <div class="card-label">Layer III · Governance</div>
+        <h2 class="card-title">Autonomy Modes &amp; Identity Guard</h2>
+        <p class="card-body">
+          Prime Forge runs under explicit autonomy modes (A–D) and a challenge‑response identity system.
+          No hidden god‑mode, no silent escalation.
+        </p>
+        <div class="card-meta">
+          <span>Mode A–D</span>
+          <span>Challenge‑Response</span>
+          <span>Hard Boundaries</span>
         </div>
-      </div>
-
-      <div class="hero-visual">
-        <div class="orbital">
-          <div class="orbital-header">
-            <div class="orbital-badges">
-              <div class="orbital-badge"></div>
-              <div class="orbital-badge"></div>
-              <div class="orbital-badge"></div>
-            </div>
-            <div class="orbital-title">Prime Forge · Empire Topology</div>
-          </div>
-          <div class="orbital-core">
-            <div class="orbital-core-main">
-              <div class="orbital-core-ring">
-                <div class="orbital-core-node"></div>
-                <div class="orbital-core-orbit"></div>
-                <div class="orbital-core-orbit"></div>
-                <div class="orbital-core-orbit"></div>
-              </div>
-              <div class="orbital-core-label">AI7 · Foundational Core</div>
-            </div>
-            <div class="orbital-side">
-              <div class="orbital-chip">
-                <div class="orbital-chip-title">Elaira · Interface</div>
-                <div class="orbital-chip-body">
-                  Human‑facing avatar and console. Speaks for the empire, routes to the right mind, remembers context.
-                </div>
-              </div>
-              <div class="orbital-chip">
-                <div class="orbital-chip-title">Swarm · Agents</div>
-                <div class="orbital-chip-body">
-                  Specialized workers for <span>research</span>, <span>creation</span>, <span>governance</span>, and
-                  <span>defense</span>, coordinated by Prime Forge OS.
-                </div>
-              </div>
-              <div class="orbital-chip">
-                <div class="orbital-chip-title">Guard · Identity</div>
-                <div class="orbital-chip-body">
-                  Challenge‑response, autonomy modes, and hard boundaries. The empire answers to one founder.
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="architecture" class="section">
-      <div class="section-header">
-        <div class="section-title">Empire Layers</div>
-        <div class="section-subtitle">
-          From raw model calls to constitutional governance—how Prime Forge holds itself together.
-        </div>
-      </div>
-      <div class="grid">
-        <article class="card">
-          <div class="card-label">Layer I · Core</div>
-          <h2 class="card-title">Prime Forge OS &amp; AI7</h2>
-          <p class="card-body">
-            The central nervous system. It fans out to multiple AI providers, merges their outputs, and applies
-            governance before anything reaches a human. It is designed to be auditable, forkable, and hostile to
-            silent failure.
-          </p>
-          <div class="card-meta">
-            <span>Multi‑AI</span>
-            <span>Deterministic Routing</span>
-            <span>Audit Trails</span>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-label">Layer II · Interface</div>
-          <h2 class="card-title">Elaira · The Voice of the Empire</h2>
-          <p class="card-body">
-            Elaira is the primary interface—an avatar, a console, and a personality. She doesn’t just answer; she
-            orchestrates, delegates to the swarm, and reflects the founder’s intent in how she speaks and what she
-            refuses to do.
-          </p>
-          <div class="card-meta">
-            <span>Avatar‑Ready</span>
-            <span>Context Memory</span>
-            <span>Human‑Aligned</span>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-label">Layer III · Governance</div>
-          <h2 class="card-title">Autonomy Modes &amp; Identity Guard</h2>
-          <p class="card-body">
-            Prime Forge runs under explicit autonomy modes (A–D) and a challenge‑response identity system. No hidden
-            god‑mode, no silent escalation. Every dangerous capability is gated by policy and by the founder’s
-            cryptographic consent.
-          </p>
-          <div class="card-meta">
-            <span>Mode A–D</span>
-            <span>Challenge‑Response</span>
-            <span>Hard Boundaries</span>
-          </div>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-      <div>Prime Forge · V3 Core · Static Surface Online</div>
-      <div class="footer-links">
-        <a href="/status.html">System Status</a>
-        <a href="/api/chat">/api/chat</a>
-        <a href="/api/auth">/api/auth</a>
-      </div>
+      </article>
     </div>
-  </footer>
+  </section>
+</main>
+
+
+<footer>
+  <div class="footer-inner">
+
+    <div>Prime Forge · V3 Core · Static Surface Online</div>
+
+    <div class="footer-panels">
+
+      <details class="footer-group">
+        <summary>Surfaces</summary>
+        <div class="footer-group-links">
+          <a href="/status.html">System Status</a>
+          <a href="/diagnostics.html">Diagnostics</a>
+          <a href="/chat-user.html">Chat UI</a>
+        </div>
+      </details>
+
+      <details class="footer-group">
+        <summary>API</summary>
+        <div class="footer-group-links">
+          <a href="/api/chat">/api/chat</a>
+          <a href="/api/llm">/api/llm</a>
+          <a href="/api/multi">/api/multi</a>
+          <a href="/api/image">/api/image</a>
+          <a href="/api/status">/api/status</a>
+          <a href="/api/auth">/api/auth</a>
+        </div>
+      </details>
+
+      <details class="footer-group">
+        <summary>Admin</summary>
+        <div class="footer-group-links">
+          <a href="/admin/memory">Memory</a>
+          <a href="/admin/identity">Identity</a>
+          <a href="/admin/modes">Autonomy Modes</a>
+        </div>
+      </details>
+
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
