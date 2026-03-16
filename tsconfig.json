@@ -8,17 +8,24 @@
     "forceConsistentCasingInFileNames": true,
     "strict": false,
     "skipLibCheck": true,
-    "rootDir": ".",
+
+    // INTERNAL CODE ONLY
+    "rootDir": "src",
     "outDir": "dist",
+
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
       "@/core/*": ["src/core/*"],
       "@/utils/*": ["src/utils/*"],
       "@/swarm/*": ["src/swarm/*"],
-      "@/api/*": ["api/*"]
+      "@/api/*": ["src/api/*"]   // internal API logic, NOT external endpoints
     }
   },
-  "include": ["src", "api"],
-  "exclude": ["node_modules", "dist"]
+
+  // ONLY compile internal TypeScript
+  "include": ["src/**/*"],
+
+  // DO NOT compile external API endpoints
+  "exclude": ["node_modules", "dist", "api"]
 }
