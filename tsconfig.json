@@ -9,7 +9,7 @@
     "strict": false,
     "skipLibCheck": true,
 
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": "dist",
 
     "baseUrl": ".",
@@ -22,6 +22,6 @@
     }
   },
 
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "api"]
+  "include": ["src/**/*", "api/**/*", "server.ts"],
+  "exclude": ["node_modules", "dist"]
 }
