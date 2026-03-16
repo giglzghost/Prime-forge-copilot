@@ -6,7 +6,7 @@ import llmHandler from "./api/llm";
 import multiHandler from "./api/multi";
 import imageHandler from "./api/image";
 import statusHandler from "./api/status";
-import chatStreamHandler from "./api/chat-stream"; // <-- NEW
+import chatStreamHandler from "./api/chat-stream";
 
 const PORT = process.env.PORT || 3000;
 
@@ -15,16 +15,14 @@ function createServer() {
     const parsed = url.parse(req.url || "/", true);
     const path = parsed.pathname || "/";
 
-    // --- API ROUTES ---
     if (path === "/api/chat") return chatHandler(req as any, res as any);
-    if (path === "/api/chat-stream") return chatStreamHandler(req as any, res as any); // <-- NEW
+    if (path === "/api/chat-stream") return chatStreamHandler(req as any, res as any);
     if (path === "/api/llm") return llmHandler(req as any, res as any);
     if (path === "/api/multi") return multiHandler(req as any, res as any);
     if (path === "/api/image") return imageHandler(req as any, res as any);
     if (path === "/api/status") return statusHandler(req as any, res as any);
 
-    // --- STATIC FILES ---
-    // Serve /public/* files
+    // Static files
     if (path.startsWith("/")) {
       try {
         const fs = await import("fs");
@@ -45,12 +43,9 @@ function createServer() {
           res.writeHead(200, { "Content-Type": type });
           return fs.createReadStream(filePath).pipe(res);
         }
-      } catch (err) {
-        // fall through to 404
-      }
+      } catch {}
     }
 
-    // --- 404 ---
     res.statusCode = 404;
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify({ error: "Not found" }));
