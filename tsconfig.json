@@ -9,7 +9,6 @@
     "strict": false,
     "skipLibCheck": true,
 
-    // INTERNAL CODE ONLY
     "rootDir": "src",
     "outDir": "dist",
 
@@ -19,13 +18,10 @@
       "@/core/*": ["src/core/*"],
       "@/utils/*": ["src/utils/*"],
       "@/swarm/*": ["src/swarm/*"],
-      "@/api/*": ["src/api/*"]   // internal API logic, NOT external endpoints
+      "@/api/*": ["src/api/*"]
     }
   },
 
-  // ONLY compile internal TypeScript
   "include": ["src/**/*"],
-
-  // DO NOT compile external API endpoints
   "exclude": ["node_modules", "dist", "api"]
 }
