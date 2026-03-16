@@ -3,28 +3,48 @@ export const config = {
 };
 
 import type { IncomingMessage, ServerResponse } from "http";
-import { readJsonBody, sendJson } from "./_utils";
-import { handleChat } from "../src/core/ai7";
+import { sendJson } from "./_utils";
+import { route } from "../src/core/router";
 
 export default async function handler(
   req: IncomingMessage | any,
   res: ServerResponse | any
 ) {
   if (req.method !== "POST") {
-    return sendJson(res, 405, { error: "Method not allowed" });
+    return sendJson(res, 405, { ok: false, message: "Use POST." });
   }
 
-  const body = await readJsonBody(req);
-  const prompt = body?.prompt || body?.message || "";
-
-  if (!prompt) {
-    return sendJson(res, 400, { error: "Missing prompt" });
+  let body: any = {};
+  try {
+    body =
+      typeof req.body === "string"
+        ? JSON.parse(req.body)
+        : req.body || {};
+  } catch {
+    body = {};
   }
 
-  const result = await handleChat({
-    userMessage: prompt,
-    requestedBy: body?.requestedBy || "api:chat"
+  // Poll channel
+  if (body.action === "poll") {
+    const core = route({
+      type: "chat",
+      action: "poll",
+      requestedBy: "api:chat"
+    });
+
+    const messages = core.outgoingMessages ?? [];
+    return sendJson(res, 200, { ok: true, messages });
+  }
+
+  // User → AI7
+  const message = body.message ?? body.text ?? "";
+  const core = route({
+    type: "chat",
+    action: "userMessage",
+    requestedBy: "api:chat",
+    payload: { message }
   });
 
-  return sendJson(res, 200, result);
+  const reply = core.reply ?? core.text ?? "No reply.";
+  return sendJson(res, 200, { ok: true, reply });
 }
