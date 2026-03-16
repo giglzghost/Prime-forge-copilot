@@ -143,34 +143,6 @@ PrimeForge is built around:
 - safe‑mode defaults  
 - auditable actions  
 
-PrimeForge is not a black box.  
-It is a transparent, constitutional system.
-
----
-
-🤝 Contributing
-
-PrimeForge welcomes:
-
-- researchers  
-- governance engineers  
-- AI safety practitioners  
-- constitutional designers  
-- developers  
-
-Contributions should align with:
-
-- constitutional clarity  
-- safety  
-- sovereignty  
-- transparency  
-
----
-
-📜 License
-
-Open‑source license included in repository.
-
 ---
 
 ⭐ End of Public README
