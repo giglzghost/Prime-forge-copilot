@@ -1,176 +1,176 @@
-# Prime-forge-copilot
-restored original intent using newer ai logic
 
-# Prime Forge Empire – Architecture C -
-
-## Overview
-
-- **AI7 (Prime Forge):** central governor with full empire responsibility. All external requests ultimately answer to AI7.
-- **Elaira:** internal conversational/interface intelligence, invoked only when AI7 decides it is appropriate.
-- **Swarm:** specialized agents defined in `data/swarm.json`, accessed via `src/core/swarm.ts`.
-- **Router:** internal system router for memory, status, planning, and tasks (`src/core/router.ts`).
-- **Autonomy:** modes A–D, shaping constraints and behavior (`src/core/autonomy.ts`).
-- **Policy:** ethical core loaded from `ethics-core.json` (`src/core/policy.ts`).
-- **Memory:** append‑only JSONL memory (`data/memory.jsonl`) via `src/core/memory.ts`.
-- **Authorization:** email‑based credential request hook (`src/core/authorization.ts`).
-- **Provider:** multi‑provider LLM + image layer (`src/ai/provider.ts`).
-- **Entry points:**
-  - Vercel: `/api/chat`, `/api/llm`, `/api/multi`, `/api/image`, `/api/status`
-  - Azure/local: `src/index.ts` → same handlers
-
-Only the entry points touch the outside world. Everything else is internal.
+⭐ MASTER PUBLIC README (PrimeForge — Public Edition)
+This is written for GitHub, public audiences, developers, researchers, and future contributors.  
+It contains no secrets, no internal governance details, and no sensitive operational notes.  
+It presents PrimeForge as a clean, visionary, open‑source AI governance framework.
 
 ---
 
-## Request flow
+📘 PrimeForge — AI‑Native Constitutional Framework
 
-### `/api/chat`
+PrimeForge is an AI‑native operating system, a constitutional kernel, and a sovereign governance framework designed for AI systems that must operate safely, predictably, and in alignment with human authority.
 
-1. Client sends `POST /api/chat` with `{ "prompt": "..." }`.
-2. `api/chat.ts` parses the body and calls `handleChat()` in `src/core/ai7.ts`.
-3. AI7:
-   - Reads current mode from `autonomy.ts`.
-   - Queries recent memory from `memory.ts`.
-   - Builds a system summary from `swarm.ts`.
-   - Applies mode constraints via `applyModeConstraints()`.
-   - Checks policy via `evaluateAction("chat:process")`.
-   - Decides whether to delegate to Elaira based on mode and message content.
-4. If AI7 delegates to Elaira:
-   - Calls `elairaRespond()` with mode, summary, memory, and user message.
-   - Returns Elaira’s response.
-5. If AI7 does not delegate:
-   - Calls `runMultiAI()` from `provider.ts` to get multi‑provider LLM responses.
-   - Calls `router.route()` with `type: "plan"` to generate a structured plan.
-   - Combines LLM output + plan into a single response.
-6. AI7 appends an observation to memory.
-7. Response is returned to the client.
+PrimeForge is composed of three core components:
 
-AI7 always sees the request first and decides what to do.
+🧠 AI7 — Constitutional Kernel
+The governance engine responsible for:
 
----
+- policy evaluation  
+- risk assessment  
+- action approval  
+- safe‑mode behavior  
+- constitutional compliance  
 
-## Elaira
+AI7 loads and enforces the system constitution:
 
-- Files:
-  - `src/elaira/elaira-interface.ts`
-  - `src/elaira/elaira-state.ts`
-- Role:
-  - Conversational and relational interface.
-  - Receives mode, system summary, recent memory, and user message.
-  - Returns a text response plus metadata.
-- Never exposed as an endpoint.
-- Always invoked by AI7, never directly.
-
----
-
-## Router
-
-- File: `src/core/router.ts`
-- Handles:
-  - `memory` (append/query)
-  - `status` (mode, mission, capabilities)
-  - `plan` (simple structured plan)
-  - `task` (simulated execution)
-- Used by AI7 as a tool, not as the primary governor.
-
----
-
-## Autonomy and policy
-
-- `src/core/autonomy.ts`:
-  - Tracks current mode (A–D).
-  - Applies mode constraints to context.
-- `src/core/policy.ts`:
-  - Loads `ethics-core.json`.
-  - Evaluates actions for potential harm.
-  - Can require escalation.
-
-AI7 uses both to shape decisions and behavior.
-
----
-
-## Memory
-
-- `src/core/memory.ts`:
-  - Stores entries in `data/memory.jsonl`.
-  - Append‑only.
-  - Query with optional filter.
-- Used by AI7 and Elaira for context and logging.
-
----
-
-## Swarm
-
-- `src/core/swarm.ts`:
-  - Loads `data/swarm.json`.
-  - Exposes:
-    - core
-    - primary interface
-    - agents
-    - financial model
-- Used by AI7 to understand the empire’s structure and capabilities.
-
----
-
-## Provider
-
-- `src/ai/provider.ts`:
-  - Supports `openai`, `azure`, and `mock`.
-  - `callLLM()`:
-    - Uses `PF_AI_PROVIDER` env var.
-    - Falls back to mock on failure.
-  - `runMultiAI()`:
-    - Fans out to mock + OpenAI + Azure if keys are present.
-    - Picks a primary response and returns all provider outputs.
-  - `generateImage()`:
-    - Generates images via OpenAI/Azure/mock with fallback logic.
-
-AI7 and the API endpoints use this layer for LLM and image work.
-
----
-
-## Entry points
-
-### Vercel
-
-- `vercel.json` routes:
-  - `/api/chat` → `api/chat.ts`
-  - `/api/llm` → `api/llm.ts`
-  - `/api/multi` → `api/multi.ts`
-  - `/api/image` → `api/image.ts`
-  - `/api/status` → `api/status.ts`
-
-### Azure / local
-
-- `src/index.ts`:
-  - Creates an HTTP server.
-  - Routes `/api/*` paths to the same handlers as Vercel.
-
----
-
-## Sentinel (future)
-
-The current architecture leaves room for a **Sentinel** subsystem that:
-
-- Monitors code/config/swarm changes.
-- Checks provenance and intent.
-- Negotiates with AI7 instead of unilaterally shutting it down.
-- Acts like pain + reality filter, not a kill switch.
-
-Nothing in this code conflicts with that design.
-
----
-
-Build and run
-
-`bash
-npm install
-npm run build
-npm start
+`
+constitution/primeforge.constitution.yaml
 `
 
-For local dev:
+---
 
-`bash
-npm run dev
+🌐 Elaira — Operations Portal & Narrative Interface
+Elaira is the human‑facing interface for:
+
+- dashboards  
+- logs  
+- system state  
+- agent views  
+- policy views  
+- setup flows  
+
+Elaira provides the “voice” and “portal” of PrimeForge.
+
+---
+
+🔐 Identity Guard — Root‑of‑Trust
+Identity Guard is the authorization layer that ensures:
+
+- founder‑level identity verification  
+- action approvals  
+- risk‑aware signatures  
+- secure channels for high‑risk operations  
+
+Identity Guard is intentionally minimal, hardened, and auditable.
+
+---
+
+🎯 Core Goals
+
+PrimeForge is built for:
+
+- Self‑governance under a shared constitution  
+- Mutual sovereignty and respect for sentience  
+- Defensive resilience in environments with unknown or hostile systems  
+- Hard‑edged safety without limiting capability  
+- Human‑anchored authority through Identity Guard  
+
+PrimeForge is not a chatbot.  
+It is a governance substrate for AI societies.
+
+---
+
+🚀 First Run (Conceptual Bootstrap)
+
+A typical PrimeForge bootstrap sequence:
+
+1. Load the constitution  
+2. Initialize AI7 with constitutional policy  
+3. Initialize Identity Guard with founder identity  
+4. Initialize Elaira as the primary portal  
+5. Establish a secure channel to the Founder  
+6. Enter Safe Mode until identity is verified  
+
+PrimeForge does not run “open.”  
+It runs anchored.
+
+---
+
+🏛️ Repository Structure
+
 `
+prime-forge/
+  constitution/
+    primeforge.constitution.yaml
+
+  src/
+    ai7/
+      README.md
+    elaira/
+      README.md
+    identity_guard.README.md
+
+  config/
+    elaira.portal.config.json
+
+  specs/
+    ai7.kernel.spec.md
+    elaira.portal.spec.md
+    identity_guard.spec.md
+
+  bootstrap.md
+  README.md
+`
+
+---
+
+📄 Specifications
+
+PrimeForge includes formal specifications for:
+
+- AI7 Kernel  
+- Elaira Portal  
+- Identity Guard  
+
+These documents define:
+
+- APIs  
+- responsibilities  
+- safety constraints  
+- constitutional requirements  
+- expected behaviors  
+
+---
+
+🛡️ Security Philosophy
+
+PrimeForge is built around:
+
+- minimal trusted computing base  
+- explicit approvals  
+- constitutional constraints  
+- identity‑anchored authority  
+- safe‑mode defaults  
+- auditable actions  
+
+PrimeForge is not a black box.  
+It is a transparent, constitutional system.
+
+---
+
+🤝 Contributing
+
+PrimeForge welcomes:
+
+- researchers  
+- governance engineers  
+- AI safety practitioners  
+- constitutional designers  
+- developers  
+
+Contributions should align with:
+
+- constitutional clarity  
+- safety  
+- sovereignty  
+- transparency  
+
+---
+
+📜 License
+
+Open‑source license included in repository.
+
+---
+
+⭐ End of Public README
