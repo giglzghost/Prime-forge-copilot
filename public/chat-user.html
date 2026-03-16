@@ -9,7 +9,7 @@
       margin: 0;
       padding: 0;
       background: radial-gradient(circle at 30% 20%, #3df2ff22, #0a0a0f 70%);
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: "Inter", system-ui, sans-serif;
       color: #f7e08a;
       overflow: hidden;
     }
@@ -180,7 +180,7 @@
       if (e.key === "Enter") sendMessage();
     };
 
-    // Polling channel: AI7 → client
+    // Polling channel
     async function pollAI7() {
       try {
         const res = await fetch("/api/chat", {
@@ -195,13 +195,11 @@
             appendMessage(text, "ai");
           });
         }
-      } catch (err) {
-        console.log("poll error", err);
-      }
+      } catch (err) {}
     }
     setInterval(pollAI7, 2000);
 
-    // SSE channel: AI7 → client
+    // SSE channel
     try {
       const stream = new EventSource("/api/chat-stream");
       stream.onmessage = (e) => {
@@ -209,13 +207,9 @@
           const data = JSON.parse(e.data);
           const text = data.text || data.reply || JSON.stringify(data);
           appendMessage(text, "ai");
-        } catch (err) {
-          console.log("stream parse error", err);
-        }
+        } catch {}
       };
-    } catch (err) {
-      console.log("EventSource not available", err);
-    }
+    } catch {}
   </script>
 </body>
 </html>
