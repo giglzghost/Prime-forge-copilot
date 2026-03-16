@@ -20,7 +20,6 @@ export default async function handler(
     Connection: "keep-alive"
   });
 
-  // Subscribe to AI7 stream via your router
   const core = route({
     type: "chat",
     action: "subscribeStream",
