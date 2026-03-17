@@ -1,5 +1,5 @@
 
-# Prime Forge Copilot
+# Prime Forge Copilot -
 
 Restored original Prime Forge V3 intent using newer AI logic, with a modular, auditable architecture:
 
