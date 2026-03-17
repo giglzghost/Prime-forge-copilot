@@ -3,6 +3,7 @@ import path from "path";
 import { applyModeConstraints, getCurrentMode } from "./autonomy";
 import * as Policy from "./policy";
 import * as Memory from "./memory";
+import { handleChat } from "./ai7";
 
 const CORE_PATH = path.resolve(__dirname, "..", "..", "prime_forge_core.json");
 
@@ -13,14 +14,13 @@ export interface RouteRequest {
   requestedBy?: string;
 }
 
-// *** ONLY CHANGE REQUIRED ***
-// This allows status.ts to return the Matriarch dashboard payload
-// without TypeScript throwing errors.
 export interface RouteResponse {
   ok: boolean;
   message: string;
   data?: any;
-  [key: string]: any;   // <— THIS LINE FIXES ALL YOUR BUILD ERRORS
+  text?: string;
+  reply?: string;
+  [key: string]: any;
 }
 
 let coreConfig: any = null;
@@ -33,7 +33,7 @@ export function loadCoreConfig() {
   return coreConfig;
 }
 
-export function route(req: RouteRequest): RouteResponse {
+export async function route(req: RouteRequest): Promise<RouteResponse> {
   const config = loadCoreConfig();
 
   const context = {
@@ -44,27 +44,61 @@ export function route(req: RouteRequest): RouteResponse {
     payload: req.payload || {}
   };
 
-  const constrained = applyModeConstraints(context);
+  applyModeConstraints(context);
 
-  // FIXED: use evaluateAction() and correct fields
   const policyCheck = Policy.evaluateAction(req.action);
-
   if (!policyCheck.allowed) {
     return { ok: false, message: policyCheck.reason };
   }
 
   switch (req.type) {
+    case "chat":
+      return await handleChatRoute(req);
+
     case "memory":
       return handleMemory(req);
+
     case "status":
-      return handleStatus(constrained);
+      return handleStatus(context);
+
     case "plan":
       return handlePlan(req);
+
     case "task":
       return handleTask(req);
+
     default:
       return { ok: false, message: `Unknown route type: ${req.type}` };
   }
+}
+
+async function handleChatRoute(req: RouteRequest): Promise<RouteResponse> {
+  if (req.action === "userMessage") {
+    const userMessage = req.payload?.message ?? "";
+
+    const result = await handleChat({
+      userMessage,
+      requestedBy: req.requestedBy || "api:chat"
+    });
+
+    return {
+      ok: true,
+      message: "Chat processed.",
+      text: result.text,
+      reply: result.text,
+      meta: result.meta
+    };
+  }
+
+  if (req.action === "poll") {
+    return {
+      ok: true,
+      message: "No outgoing messages configured.",
+      data: []
+    };
+  }
+
+  return { ok: false, message: `Unknown chat action: ${req.action}` };
 }
 
 function handleMemory(req: RouteRequest): RouteResponse {
