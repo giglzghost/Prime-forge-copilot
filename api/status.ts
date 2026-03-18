@@ -14,7 +14,7 @@ export default async function handler(
     return sendJson(res, 405, { error: "Method not allowed" });
   }
 
-  const core = route({
+  const core = await route({
     type: "status",
     action: "get",
     requestedBy: "api:status"
