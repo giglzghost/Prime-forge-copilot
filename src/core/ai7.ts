@@ -54,7 +54,9 @@ export async function handleChat(req: AI7ChatRequest): Promise<AI7ChatResponse> 
     meta = { ...meta, elairaMeta: elaira.meta };
   } else {
     const multi = await runMultiAI(req.userMessage);
-    const routed: RouteResponse = route({
+
+    // ⭐ FIX: await route()
+    const routed: RouteResponse = await route({
       type: "plan",
       action: "generate",
       payload: { goal: req.userMessage },
