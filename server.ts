@@ -1,3 +1,5 @@
+// server.ts — Prime Forge V3 Hybrid Server
+
 import http from "http";
 import url from "url";
 import path from "path";
@@ -17,6 +19,7 @@ const handle = nextApp.getRequestHandler();
 
 const PORT = process.env.PORT || 3000;
 
+// Serve static files from /public
 function serveStatic(req: http.IncomingMessage, res: http.ServerResponse, pathname: string) {
   const publicDir = path.join(process.cwd(), "public");
   let filePath = path.join(publicDir, pathname);
