@@ -2,6 +2,7 @@ import http from "http";
 import url from "url";
 import path from "path";
 import fs from "fs";
+import next from "next";
 
 import chatHandler from "./api/chat";
 import llmHandler from "./api/llm";
@@ -10,20 +11,20 @@ import imageHandler from "./api/image";
 import statusHandler from "./api/status";
 import chatStreamHandler from "./api/chat-stream";
 
+const dev = process.env.NODE_ENV !== "production";
+const nextApp = next({ dev });
+const handle = nextApp.getRequestHandler();
+
 const PORT = process.env.PORT || 3000;
 
 function serveStatic(req: http.IncomingMessage, res: http.ServerResponse, pathname: string) {
   const publicDir = path.join(process.cwd(), "public");
-
-  // Normalize path
   let filePath = path.join(publicDir, pathname);
 
-  // If path is a directory, serve index.html
   if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
     filePath = path.join(filePath, "index.html");
   }
 
-  // If file doesn't exist, return false so server continues
   if (!fs.existsSync(filePath)) return false;
 
   const ext = path.extname(filePath).toLowerCase();
@@ -41,12 +42,12 @@ function serveStatic(req: http.IncomingMessage, res: http.ServerResponse, pathna
   return true;
 }
 
-function createServer() {
-  const server = http.createServer(async (req, res) => {
+nextApp.prepare().then(() => {
+  const server = http.createServer((req, res) => {
     const parsed = url.parse(req.url || "/", true);
     const pathname = parsed.pathname || "/";
 
-    // API ROUTES
+    // API ROUTES (preserved exactly)
     if (pathname === "/api/chat") return chatHandler(req as any, res as any);
     if (pathname === "/api/chat-stream") return chatStreamHandler(req as any, res as any);
     if (pathname === "/api/llm") return llmHandler(req as any, res as any);
@@ -54,20 +55,14 @@ function createServer() {
     if (pathname === "/api/image") return imageHandler(req as any, res as any);
     if (pathname === "/api/status") return statusHandler(req as any, res as any);
 
-    // STATIC ROUTES (fixed)
+    // STATIC FILES
     if (serveStatic(req, res, pathname)) return;
 
-    // 404 fallback
-    res.writeHead(404, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ error: "Not found" }));
+    // EVERYTHING ELSE → NEXT.JS
+    return handle(req, res, parsed);
   });
 
-  return server;
-}
-
-const server = createServer();
-server.listen(PORT, () => {
-  console.log(`Prime Forge server running on port ${PORT}`);
+  server.listen(PORT, () => {
+    console.log(`Prime Forge hybrid server running on port ${PORT}`);
+  });
 });
-
-export default createServer;
