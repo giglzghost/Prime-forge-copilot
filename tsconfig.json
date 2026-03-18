@@ -8,10 +8,8 @@
     "forceConsistentCasingInFileNames": true,
     "strict": false,
     "skipLibCheck": true,
-
     "rootDir": ".",
     "outDir": "dist",
-
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
@@ -21,7 +19,6 @@
       "@/api/*": ["src/api/*"]
     }
   },
-
-  "include": ["src/**/*", "api/**/*", "server.ts"],
+  "include": ["src/**/*", "server.ts", "app/**/*", "next-env.d.ts"],
   "exclude": ["node_modules", "dist"]
 }
