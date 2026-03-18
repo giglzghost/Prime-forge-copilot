@@ -11,6 +11,7 @@
     "rootDir": ".",
     "outDir": "dist",
     "baseUrl": ".",
+    "jsx": "preserve",
     "paths": {
       "@/*": ["src/*"],
       "@/core/*": ["src/core/*"],
