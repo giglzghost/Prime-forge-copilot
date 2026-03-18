@@ -26,7 +26,7 @@ export default async function handler(
 
   // Poll channel
   if (body.action === "poll") {
-    const core = route({
+    const core = await route({
       type: "chat",
       action: "poll",
       requestedBy: "api:chat"
@@ -38,7 +38,7 @@ export default async function handler(
 
   // User → AI7
   const message = body.message ?? body.text ?? "";
-  const core = route({
+  const core = await route({
     type: "chat",
     action: "userMessage",
     requestedBy: "api:chat",
